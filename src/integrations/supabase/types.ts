@@ -14,16 +14,295 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      companies: {
+        Row: {
+          business_type: string | null
+          country: string
+          created_at: string
+          created_by: string
+          currency: string
+          id: string
+          monthly_budget: number | null
+          name: string
+          slug: string
+        }
+        Insert: {
+          business_type?: string | null
+          country?: string
+          created_at?: string
+          created_by: string
+          currency?: string
+          id?: string
+          monthly_budget?: number | null
+          name: string
+          slug: string
+        }
+        Update: {
+          business_type?: string | null
+          country?: string
+          created_at?: string
+          created_by?: string
+          currency?: string
+          id?: string
+          monthly_budget?: number | null
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      company_members: {
+        Row: {
+          company_id: string
+          created_at: string
+          full_name: string | null
+          id: string
+          role: Database["public"]["Enums"]["company_role"]
+          user_id: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["company_role"]
+          user_id: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["company_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_members_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory: {
+        Row: {
+          company_id: string
+          id: string
+          product_id: string
+          quantity: number
+          updated_at: string
+          warehouse_id: string
+        }
+        Insert: {
+          company_id: string
+          id?: string
+          product_id: string
+          quantity?: number
+          updated_at?: string
+          warehouse_id: string
+        }
+        Update: {
+          company_id?: string
+          id?: string
+          product_id?: string
+          quantity?: number
+          updated_at?: string
+          warehouse_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_warehouse_id_fkey"
+            columns: ["warehouse_id"]
+            isOneToOne: false
+            referencedRelation: "warehouses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          category: string | null
+          company_id: string
+          created_at: string
+          id: string
+          lead_time_days: number
+          name: string
+          reorder_point: number
+          safety_stock: number
+          sell_price: number
+          sku: string
+          supplier_id: string | null
+          unit: string
+          unit_cost: number
+        }
+        Insert: {
+          category?: string | null
+          company_id: string
+          created_at?: string
+          id?: string
+          lead_time_days?: number
+          name: string
+          reorder_point?: number
+          safety_stock?: number
+          sell_price?: number
+          sku: string
+          supplier_id?: string | null
+          unit?: string
+          unit_cost?: number
+        }
+        Update: {
+          category?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          lead_time_days?: number
+          name?: string
+          reorder_point?: number
+          safety_stock?: number
+          sell_price?: number
+          sku?: string
+          supplier_id?: string | null
+          unit?: string
+          unit_cost?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      suppliers: {
+        Row: {
+          company_id: string
+          contact_name: string | null
+          country: string | null
+          created_at: string
+          email: string | null
+          id: string
+          lead_time_days: number
+          name: string
+          payment_terms: string | null
+          phone: string | null
+        }
+        Insert: {
+          company_id: string
+          contact_name?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          lead_time_days?: number
+          name: string
+          payment_terms?: string | null
+          phone?: string | null
+        }
+        Update: {
+          company_id?: string
+          contact_name?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          lead_time_days?: number
+          name?: string
+          payment_terms?: string | null
+          phone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "suppliers_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      warehouses: {
+        Row: {
+          capacity_units: number | null
+          company_id: string
+          created_at: string
+          id: string
+          location: string | null
+          name: string
+        }
+        Insert: {
+          capacity_units?: number | null
+          company_id: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          name: string
+        }
+        Update: {
+          capacity_units?: number | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "warehouses_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_edit_company: { Args: { _company: string }; Returns: boolean }
+      create_company: {
+        Args: {
+          _budget: number
+          _business_type: string
+          _country: string
+          _currency: string
+          _full_name: string
+          _name: string
+          _slug: string
+        }
+        Returns: string
+      }
+      is_company_admin: { Args: { _company: string }; Returns: boolean }
+      is_company_member: { Args: { _company: string }; Returns: boolean }
+      slug_available: { Args: { _slug: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      company_role: "owner" | "admin" | "manager" | "analyst" | "viewer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +429,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      company_role: ["owner", "admin", "manager", "analyst", "viewer"],
+    },
   },
 } as const
