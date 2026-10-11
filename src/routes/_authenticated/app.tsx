@@ -1,0 +1,184 @@
+import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Bell, Building2, Check, ChevronsUpDown, LogOut, Search, Sparkles, Upload } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { WorkspaceProvider, useWorkspace } from "@/lib/workspace";
+import { navGroups, allNav } from "@/lib/nav";
+import { Logo } from "@/components/brand";
+import {
+  Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarHeader, SidebarInset, SidebarMenu,
+  SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
+export const Route = createFileRoute("/_authenticated/app")({
+  component: () => (
+    <WorkspaceProvider>
+      <Shell />
+    </WorkspaceProvider>
+  ),
+});
+
+function hrefFor(slug: string) {
+  return slug ? `/app/${slug}` : "/app";
+}
+
+function Shell() {
+  const { company, loading } = useWorkspace();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [cmd, setCmd] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setCmd((o) => !o); }
+    };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  }, []);
+
+  if (!loading && !company) return <NoWorkspace />;
+
+  return (
+    <SidebarProvider>
+      <Sidebar collapsible="icon">
+        <SidebarHeader className="px-3 py-4"><Link to="/app"><Logo className="text-sidebar-accent-foreground" /></Link></SidebarHeader>
+        <SidebarContent>
+          {navGroups.map((g) => (
+            <SidebarGroup key={g.label}>
+              <SidebarGroupLabel>{g.label}</SidebarGroupLabel>
+              <SidebarMenu>
+                {g.items.map((it) => {
+                  const href = hrefFor(it.slug);
+                  const active = it.slug ? pathname.startsWith(href) : pathname === "/app" || pathname === "/app/";
+                  return (
+                    <SidebarMenuItem key={it.slug}>
+                      <SidebarMenuButton asChild isActive={active} tooltip={it.label}>
+                        <a href={href} onClick={(e) => { e.preventDefault(); navigate({ to: href }); }}>
+                          <it.icon />
+                          <span>{it.label}</span>
+                          {it.phase && <span className="ml-auto text-[10px] uppercase tracking-wider opacity-50">soon</span>}
+                        </a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroup>
+          ))}
+        </SidebarContent>
+      </Sidebar>
+      <SidebarInset>
+        <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b bg-background/90 px-3 backdrop-blur">
+          <SidebarTrigger />
+          <WorkspaceSwitcher />
+          <button onClick={() => setCmd(true)} className="ml-2 hidden h-9 flex-1 max-w-sm items-center gap-2 rounded-md border bg-card px-3 text-sm text-muted-foreground md:flex">
+            <Search className="h-4 w-4" /> Search pages…<kbd className="ml-auto rounded border px-1.5 text-[10px]">Ctrl K</kbd>
+          </button>
+          <div className="ml-auto flex items-center gap-1">
+            <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/app/$section", params: { section: "import" } })}><Upload /> <span className="hidden sm:inline">Upload data</span></Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/app/$section", params: { section: "command-center" } })}><Sparkles /> <span className="hidden sm:inline">Ask Nexus AI</span></Button>
+            <Badge variant="outline" className="hidden lg:inline-flex">Trial</Badge>
+            <Notifications />
+            <UserMenu />
+          </div>
+        </header>
+        <main className="p-4 md:p-8"><Outlet /></main>
+      </SidebarInset>
+      <CommandDialog open={cmd} onOpenChange={setCmd}>
+        <CommandInput placeholder="Jump to…" />
+        <CommandList>
+          <CommandEmpty>Nothing found.</CommandEmpty>
+          <CommandGroup heading="Pages">
+            {allNav.map((it) => (
+              <CommandItem key={it.slug} onSelect={() => { setCmd(false); navigate({ to: hrefFor(it.slug) }); }}>
+                <it.icon /> {it.label}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
+    </SidebarProvider>
+  );
+}
+
+function WorkspaceSwitcher() {
+  const { memberships, company, switchCompany } = useWorkspace();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm" className="max-w-[220px]"><Building2 /><span className="truncate">{company?.name ?? "…"}</span><ChevronsUpDown className="opacity-50" /></Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        <DropdownMenuLabel>Workspaces</DropdownMenuLabel>
+        {memberships.map((m) => (
+          <DropdownMenuItem key={m.company.id} onSelect={() => switchCompany(m.company.id)}>
+            {m.company.name} <span className="ml-auto text-xs text-muted-foreground capitalize">{m.role}</span>
+            {m.company.id === company?.id && <Check />}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function Notifications() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild><Button variant="ghost" size="icon" aria-label="Notifications"><Bell /></Button></PopoverTrigger>
+      <PopoverContent align="end" className="w-72 text-sm">
+        <p className="font-medium">Notifications</p>
+        <p className="mt-2 text-muted-foreground">You're all caught up. Stock and supplier alerts will appear here.</p>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+function UserMenu() {
+  const { userEmail, userName, role } = useWorkspace();
+  const qc = useQueryClient();
+  const navigate = useNavigate();
+  async function signOut() {
+    await qc.cancelQueries();
+    qc.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
+  const initials = (userName ?? userEmail ?? "?").slice(0, 2).toUpperCase();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="grid h-8 w-8 place-items-center rounded-full bg-navy text-xs font-semibold text-navy-foreground" aria-label="Account">{initials}</button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>
+          <div>{userName ?? "Account"}</div>
+          <div className="text-xs font-normal text-muted-foreground">{userEmail} · <span className="capitalize">{role}</span></div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={signOut}><LogOut /> Sign out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function NoWorkspace() {
+  const navigate = useNavigate();
+  return (
+    <div className="grid min-h-screen place-items-center p-6 text-center">
+      <div className="max-w-sm">
+        <Logo className="text-lg" />
+        <h1 className="mt-6 text-xl font-semibold">No workspace yet</h1>
+        <p className="mt-2 text-sm text-muted-foreground">Your account isn't part of any company. Create one to get started.</p>
+        <Button className="mt-6" onClick={async () => { await supabase.auth.signOut(); navigate({ to: "/register" }); }}>Create a company</Button>
+      </div>
+    </div>
+  );
+}

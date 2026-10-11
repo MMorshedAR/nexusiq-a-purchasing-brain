@@ -10,33 +10,170 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppSectionRouteImport } from './routes/_authenticated/app.$section'
+import { Route as AuthenticatedAppInventoryRouteImport } from './routes/_authenticated/app.inventory'
+import { Route as AuthenticatedAppProductsRouteImport } from './routes/_authenticated/app.products'
+import { Route as AuthenticatedAppSuppliersRouteImport } from './routes/_authenticated/app.suppliers'
+import { Route as AuthenticatedAppWarehousesRouteImport } from './routes/_authenticated/app.warehouses'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppSectionRoute = AuthenticatedAppSectionRouteImport.update({
+  id: '/$section',
+  path: '/$section',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppInventoryRoute =
+  AuthenticatedAppInventoryRouteImport.update({
+    id: '/inventory',
+    path: '/inventory',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppProductsRoute =
+  AuthenticatedAppProductsRouteImport.update({
+    id: '/products',
+    path: '/products',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppSuppliersRoute =
+  AuthenticatedAppSuppliersRouteImport.update({
+    id: '/suppliers',
+    path: '/suppliers',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppWarehousesRoute =
+  AuthenticatedAppWarehousesRouteImport.update({
+    id: '/warehouses',
+    path: '/warehouses',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/app': typeof AuthenticatedAppRouteWithChildren
+  '/app/$section': typeof AuthenticatedAppSectionRoute
+  '/app/inventory': typeof AuthenticatedAppInventoryRoute
+  '/app/products': typeof AuthenticatedAppProductsRoute
+  '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
+  '/app/warehouses': typeof AuthenticatedAppWarehousesRoute
+  '/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/app/$section': typeof AuthenticatedAppSectionRoute
+  '/app/inventory': typeof AuthenticatedAppInventoryRoute
+  '/app/products': typeof AuthenticatedAppProductsRoute
+  '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
+  '/app/warehouses': typeof AuthenticatedAppWarehousesRoute
+  '/app': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/app/$section': typeof AuthenticatedAppSectionRoute
+  '/_authenticated/app/inventory': typeof AuthenticatedAppInventoryRoute
+  '/_authenticated/app/products': typeof AuthenticatedAppProductsRoute
+  '/_authenticated/app/suppliers': typeof AuthenticatedAppSuppliersRoute
+  '/_authenticated/app/warehouses': typeof AuthenticatedAppWarehousesRoute
+  '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/register'
+    | '/reset-password'
+    | '/app'
+    | '/app/$section'
+    | '/app/inventory'
+    | '/app/products'
+    | '/app/suppliers'
+    | '/app/warehouses'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/register'
+    | '/reset-password'
+    | '/app/$section'
+    | '/app/inventory'
+    | '/app/products'
+    | '/app/suppliers'
+    | '/app/warehouses'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/register'
+    | '/reset-password'
+    | '/_authenticated/app'
+    | '/_authenticated/app/$section'
+    | '/_authenticated/app/inventory'
+    | '/_authenticated/app/products'
+    | '/_authenticated/app/suppliers'
+    | '/_authenticated/app/warehouses'
+    | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +185,124 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/app': {
+      id: '/_authenticated/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AuthenticatedAppRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/app/': {
+      id: '/_authenticated/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/$section': {
+      id: '/_authenticated/app/$section'
+      path: '/$section'
+      fullPath: '/app/$section'
+      preLoaderRoute: typeof AuthenticatedAppSectionRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/inventory': {
+      id: '/_authenticated/app/inventory'
+      path: '/inventory'
+      fullPath: '/app/inventory'
+      preLoaderRoute: typeof AuthenticatedAppInventoryRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/products': {
+      id: '/_authenticated/app/products'
+      path: '/products'
+      fullPath: '/app/products'
+      preLoaderRoute: typeof AuthenticatedAppProductsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/suppliers': {
+      id: '/_authenticated/app/suppliers'
+      path: '/suppliers'
+      fullPath: '/app/suppliers'
+      preLoaderRoute: typeof AuthenticatedAppSuppliersRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/warehouses': {
+      id: '/_authenticated/app/warehouses'
+      path: '/warehouses'
+      fullPath: '/app/warehouses'
+      preLoaderRoute: typeof AuthenticatedAppWarehousesRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
   }
 }
 
+interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppSectionRoute: typeof AuthenticatedAppSectionRoute
+  AuthenticatedAppInventoryRoute: typeof AuthenticatedAppInventoryRoute
+  AuthenticatedAppProductsRoute: typeof AuthenticatedAppProductsRoute
+  AuthenticatedAppSuppliersRoute: typeof AuthenticatedAppSuppliersRoute
+  AuthenticatedAppWarehousesRoute: typeof AuthenticatedAppWarehousesRoute
+  AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
+}
+
+const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppSectionRoute: AuthenticatedAppSectionRoute,
+  AuthenticatedAppInventoryRoute: AuthenticatedAppInventoryRoute,
+  AuthenticatedAppProductsRoute: AuthenticatedAppProductsRoute,
+  AuthenticatedAppSuppliersRoute: AuthenticatedAppSuppliersRoute,
+  AuthenticatedAppWarehousesRoute: AuthenticatedAppWarehousesRoute,
+  AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
+}
+
+const AuthenticatedAppRouteWithChildren =
+  AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
