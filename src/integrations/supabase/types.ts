@@ -134,6 +134,55 @@ export type Database = {
           },
         ]
       }
+      po_items: {
+        Row: {
+          company_id: string
+          id: string
+          po_id: string
+          product_id: string
+          quantity: number
+          unit_cost: number
+        }
+        Insert: {
+          company_id: string
+          id?: string
+          po_id: string
+          product_id: string
+          quantity: number
+          unit_cost?: number
+        }
+        Update: {
+          company_id?: string
+          id?: string
+          po_id?: string
+          product_id?: string
+          quantity?: number
+          unit_cost?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "po_items_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "po_items_po_id_fkey"
+            columns: ["po_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "po_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           category: string | null
@@ -193,6 +242,118 @@ export type Database = {
             columns: ["supplier_id"]
             isOneToOne: false
             referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchase_orders: {
+        Row: {
+          approved_at: string | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          expected_date: string | null
+          id: string
+          notes: string | null
+          order_date: string
+          po_number: string
+          received_at: string | null
+          status: Database["public"]["Enums"]["po_status"]
+          supplier_id: string | null
+          warehouse_id: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          expected_date?: string | null
+          id?: string
+          notes?: string | null
+          order_date?: string
+          po_number: string
+          received_at?: string | null
+          status?: Database["public"]["Enums"]["po_status"]
+          supplier_id?: string | null
+          warehouse_id?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          expected_date?: string | null
+          id?: string
+          notes?: string | null
+          order_date?: string
+          po_number?: string
+          received_at?: string | null
+          status?: Database["public"]["Enums"]["po_status"]
+          supplier_id?: string | null
+          warehouse_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_orders_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_orders_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_orders_warehouse_id_fkey"
+            columns: ["warehouse_id"]
+            isOneToOne: false
+            referencedRelation: "warehouses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sales_history: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          product_id: string
+          quantity: number
+          sale_date: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          product_id: string
+          quantity: number
+          sale_date: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          product_id?: string
+          quantity?: number
+          sale_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_history_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_history_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]
@@ -299,10 +460,12 @@ export type Database = {
       }
       is_company_admin: { Args: { _company: string }; Returns: boolean }
       is_company_member: { Args: { _company: string }; Returns: boolean }
+      receive_purchase_order: { Args: { _po: string }; Returns: undefined }
       slug_available: { Args: { _slug: string }; Returns: boolean }
     }
     Enums: {
       company_role: "owner" | "admin" | "manager" | "analyst" | "viewer"
+      po_status: "draft" | "approved" | "received" | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -431,6 +594,7 @@ export const Constants = {
   public: {
     Enums: {
       company_role: ["owner", "admin", "manager", "analyst", "viewer"],
+      po_status: ["draft", "approved", "received", "cancelled"],
     },
   },
 } as const
