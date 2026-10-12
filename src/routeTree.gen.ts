@@ -17,6 +17,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppSectionRouteImport } from './routes/_authenticated/app.$section'
+import { Route as AuthenticatedAppForecastsRouteImport } from './routes/_authenticated/app.forecasts'
 import { Route as AuthenticatedAppInventoryRouteImport } from './routes/_authenticated/app.inventory'
 import { Route as AuthenticatedAppProductsRouteImport } from './routes/_authenticated/app.products'
 import { Route as AuthenticatedAppSuppliersRouteImport } from './routes/_authenticated/app.suppliers'
@@ -61,6 +62,12 @@ const AuthenticatedAppSectionRoute = AuthenticatedAppSectionRouteImport.update({
   path: '/$section',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppForecastsRoute =
+  AuthenticatedAppForecastsRouteImport.update({
+    id: '/forecasts',
+    path: '/forecasts',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppInventoryRoute =
   AuthenticatedAppInventoryRouteImport.update({
     id: '/inventory',
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/app/$section': typeof AuthenticatedAppSectionRoute
+  '/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/app/products': typeof AuthenticatedAppProductsRoute
   '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
@@ -105,6 +113,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/app/$section': typeof AuthenticatedAppSectionRoute
+  '/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/app/products': typeof AuthenticatedAppProductsRoute
   '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
@@ -120,6 +129,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/app/$section': typeof AuthenticatedAppSectionRoute
+  '/_authenticated/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/_authenticated/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/_authenticated/app/products': typeof AuthenticatedAppProductsRoute
   '/_authenticated/app/suppliers': typeof AuthenticatedAppSuppliersRoute
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/app'
     | '/app/$section'
+    | '/app/forecasts'
     | '/app/inventory'
     | '/app/products'
     | '/app/suppliers'
@@ -147,6 +158,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/app/$section'
+    | '/app/forecasts'
     | '/app/inventory'
     | '/app/products'
     | '/app/suppliers'
@@ -161,6 +173,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/app'
     | '/_authenticated/app/$section'
+    | '/_authenticated/app/forecasts'
     | '/_authenticated/app/inventory'
     | '/_authenticated/app/products'
     | '/_authenticated/app/suppliers'
@@ -234,6 +247,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppSectionRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/forecasts': {
+      id: '/_authenticated/app/forecasts'
+      path: '/forecasts'
+      fullPath: '/app/forecasts'
+      preLoaderRoute: typeof AuthenticatedAppForecastsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/inventory': {
       id: '/_authenticated/app/inventory'
       path: '/inventory'
@@ -267,6 +287,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAppRouteChildren {
   AuthenticatedAppSectionRoute: typeof AuthenticatedAppSectionRoute
+  AuthenticatedAppForecastsRoute: typeof AuthenticatedAppForecastsRoute
   AuthenticatedAppInventoryRoute: typeof AuthenticatedAppInventoryRoute
   AuthenticatedAppProductsRoute: typeof AuthenticatedAppProductsRoute
   AuthenticatedAppSuppliersRoute: typeof AuthenticatedAppSuppliersRoute
@@ -276,6 +297,7 @@ interface AuthenticatedAppRouteChildren {
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppSectionRoute: AuthenticatedAppSectionRoute,
+  AuthenticatedAppForecastsRoute: AuthenticatedAppForecastsRoute,
   AuthenticatedAppInventoryRoute: AuthenticatedAppInventoryRoute,
   AuthenticatedAppProductsRoute: AuthenticatedAppProductsRoute,
   AuthenticatedAppSuppliersRoute: AuthenticatedAppSuppliersRoute,
