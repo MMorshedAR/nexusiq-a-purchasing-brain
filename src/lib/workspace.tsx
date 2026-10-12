@@ -21,7 +21,7 @@ const KEY = "nexusiq.activeCompany";
 
 async function ensurePendingCompany() {
   const { data: { user } } = await supabase.auth.getUser();
-  const pending = user?.user_metadata?.pending_company as
+  const pending = user?.user_metadata?.["pending_company"] as
     | { name: string; slug: string; business_type: string; country: string; currency: string; budget: number | null; full_name: string }
     | undefined;
   if (!user || !pending) return;
@@ -52,7 +52,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
       if (error) throw error;
       return {
         email: user?.email ?? null,
-        name: (user?.user_metadata?.full_name as string) ?? null,
+        name: (user?.user_metadata?.["full_name"] as string) ?? null,
         memberships: (data ?? []) as unknown as Membership[],
       };
     },

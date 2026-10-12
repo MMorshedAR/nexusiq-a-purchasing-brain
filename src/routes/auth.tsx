@@ -48,7 +48,7 @@ function SignIn() {
         const { data: m } = await supabase
           .from("company_members").select("company_id, companies!inner(slug)")
           .eq("user_id", data.user.id).eq("companies.slug", slug.trim().toLowerCase()).maybeSingle();
-        if (!m && !data.user.user_metadata?.pending_company) {
+        if (!m && !data.user.user_metadata?.["pending_company"]) {
           await supabase.auth.signOut();
           throw new Error("You are not a member of that workspace.");
         }
@@ -64,8 +64,8 @@ function SignIn() {
 
   async function google() {
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/auth" });
-    if (r.error) return toast.error(r.error.message);
-    if (r.redirected) return;
+    if (r.error) return void toast.error(r.error.message);
+    if (r.redirected) return undefined;
     navigate({ to: "/app" });
   }
 

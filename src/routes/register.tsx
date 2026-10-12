@@ -34,9 +34,9 @@ function Register() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (f.password.length < 8) return toast.error("Password must be at least 8 characters.");
-    if (f.password !== f.confirm) return toast.error("Passwords do not match.");
-    if (!/^[a-z0-9][a-z0-9-]{2,39}$/.test(f.slug)) return toast.error("Slug: 3–40 lowercase letters, numbers or dashes.");
+    if (f.password.length < 8) return void toast.error("Password must be at least 8 characters.");
+    if (f.password !== f.confirm) return void toast.error("Passwords do not match.");
+    if (!/^[a-z0-9][a-z0-9-]{2,39}$/.test(f.slug)) return void toast.error("Slug: 3–40 lowercase letters, numbers or dashes.");
     setBusy(true);
     try {
       const { data: free } = await supabase.rpc("slug_available", { _slug: f.slug });

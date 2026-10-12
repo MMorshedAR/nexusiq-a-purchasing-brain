@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-type Row = Record<string, any> & { id: string };
+type Row = any;
 export type Field = {
   key: string; label: string; type?: "text" | "number" | "email" | "select";
   required?: boolean; options?: { value: string; label: string }[]; placeholder?: string; full?: boolean;
