@@ -20,6 +20,8 @@ import { Route as AuthenticatedAppSectionRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAppForecastsRouteImport } from './routes/_authenticated/app.forecasts'
 import { Route as AuthenticatedAppInventoryRouteImport } from './routes/_authenticated/app.inventory'
 import { Route as AuthenticatedAppProductsRouteImport } from './routes/_authenticated/app.products'
+import { Route as AuthenticatedAppPurchaseOrdersRouteImport } from './routes/_authenticated/app.purchase-orders'
+import { Route as AuthenticatedAppReorderRouteImport } from './routes/_authenticated/app.reorder'
 import { Route as AuthenticatedAppSuppliersRouteImport } from './routes/_authenticated/app.suppliers'
 import { Route as AuthenticatedAppWarehousesRouteImport } from './routes/_authenticated/app.warehouses'
 
@@ -80,6 +82,17 @@ const AuthenticatedAppProductsRoute =
     path: '/products',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const AuthenticatedAppPurchaseOrdersRoute =
+  AuthenticatedAppPurchaseOrdersRouteImport.update({
+    id: '/purchase-orders',
+    path: '/purchase-orders',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppReorderRoute = AuthenticatedAppReorderRouteImport.update({
+  id: '/reorder',
+  path: '/reorder',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppSuppliersRoute =
   AuthenticatedAppSuppliersRouteImport.update({
     id: '/suppliers',
@@ -103,6 +116,8 @@ export interface FileRoutesByFullPath {
   '/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/app/products': typeof AuthenticatedAppProductsRoute
+  '/app/purchase-orders': typeof AuthenticatedAppPurchaseOrdersRoute
+  '/app/reorder': typeof AuthenticatedAppReorderRoute
   '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
   '/app/warehouses': typeof AuthenticatedAppWarehousesRoute
   '/app/': typeof AuthenticatedAppIndexRoute
@@ -116,6 +131,8 @@ export interface FileRoutesByTo {
   '/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/app/products': typeof AuthenticatedAppProductsRoute
+  '/app/purchase-orders': typeof AuthenticatedAppPurchaseOrdersRoute
+  '/app/reorder': typeof AuthenticatedAppReorderRoute
   '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
   '/app/warehouses': typeof AuthenticatedAppWarehousesRoute
   '/app': typeof AuthenticatedAppIndexRoute
@@ -132,6 +149,8 @@ export interface FileRoutesById {
   '/_authenticated/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/_authenticated/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/_authenticated/app/products': typeof AuthenticatedAppProductsRoute
+  '/_authenticated/app/purchase-orders': typeof AuthenticatedAppPurchaseOrdersRoute
+  '/_authenticated/app/reorder': typeof AuthenticatedAppReorderRoute
   '/_authenticated/app/suppliers': typeof AuthenticatedAppSuppliersRoute
   '/_authenticated/app/warehouses': typeof AuthenticatedAppWarehousesRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
@@ -148,6 +167,8 @@ export interface FileRouteTypes {
     | '/app/forecasts'
     | '/app/inventory'
     | '/app/products'
+    | '/app/purchase-orders'
+    | '/app/reorder'
     | '/app/suppliers'
     | '/app/warehouses'
     | '/app/'
@@ -161,6 +182,8 @@ export interface FileRouteTypes {
     | '/app/forecasts'
     | '/app/inventory'
     | '/app/products'
+    | '/app/purchase-orders'
+    | '/app/reorder'
     | '/app/suppliers'
     | '/app/warehouses'
     | '/app'
@@ -176,6 +199,8 @@ export interface FileRouteTypes {
     | '/_authenticated/app/forecasts'
     | '/_authenticated/app/inventory'
     | '/_authenticated/app/products'
+    | '/_authenticated/app/purchase-orders'
+    | '/_authenticated/app/reorder'
     | '/_authenticated/app/suppliers'
     | '/_authenticated/app/warehouses'
     | '/_authenticated/app/'
@@ -268,6 +293,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppProductsRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/purchase-orders': {
+      id: '/_authenticated/app/purchase-orders'
+      path: '/purchase-orders'
+      fullPath: '/app/purchase-orders'
+      preLoaderRoute: typeof AuthenticatedAppPurchaseOrdersRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/reorder': {
+      id: '/_authenticated/app/reorder'
+      path: '/reorder'
+      fullPath: '/app/reorder'
+      preLoaderRoute: typeof AuthenticatedAppReorderRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/suppliers': {
       id: '/_authenticated/app/suppliers'
       path: '/suppliers'
@@ -290,6 +329,8 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppForecastsRoute: typeof AuthenticatedAppForecastsRoute
   AuthenticatedAppInventoryRoute: typeof AuthenticatedAppInventoryRoute
   AuthenticatedAppProductsRoute: typeof AuthenticatedAppProductsRoute
+  AuthenticatedAppPurchaseOrdersRoute: typeof AuthenticatedAppPurchaseOrdersRoute
+  AuthenticatedAppReorderRoute: typeof AuthenticatedAppReorderRoute
   AuthenticatedAppSuppliersRoute: typeof AuthenticatedAppSuppliersRoute
   AuthenticatedAppWarehousesRoute: typeof AuthenticatedAppWarehousesRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
@@ -300,6 +341,8 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppForecastsRoute: AuthenticatedAppForecastsRoute,
   AuthenticatedAppInventoryRoute: AuthenticatedAppInventoryRoute,
   AuthenticatedAppProductsRoute: AuthenticatedAppProductsRoute,
+  AuthenticatedAppPurchaseOrdersRoute: AuthenticatedAppPurchaseOrdersRoute,
+  AuthenticatedAppReorderRoute: AuthenticatedAppReorderRoute,
   AuthenticatedAppSuppliersRoute: AuthenticatedAppSuppliersRoute,
   AuthenticatedAppWarehousesRoute: AuthenticatedAppWarehousesRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,

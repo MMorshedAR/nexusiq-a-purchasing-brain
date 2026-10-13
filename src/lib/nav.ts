@@ -11,8 +11,8 @@ export const navGroups: NavGroup[] = [
   { label: "Intelligence", items: [
     { slug: "", label: "Overview", icon: LayoutDashboard },
     { slug: "command-center", label: "AI Command Center", icon: BrainCircuit, phase: 4, blurb: "Ask Nexus AI about your stock, suppliers and cash." },
-    { slug: "forecasts", label: "Demand Forecasts", icon: TrendingUp, phase: 2, blurb: "Baseline demand forecasts built from your sales history." },
-    { slug: "reorder", label: "Smart Reorder Planner", icon: ShoppingCart, phase: 2, blurb: "Reorder points, safety stock and budget-aware purchase plans." },
+    { slug: "forecasts", label: "Demand Forecasts", icon: TrendingUp },
+    { slug: "reorder", label: "Smart Reorder Planner", icon: ShoppingCart },
     { slug: "inventory", label: "Inventory Intelligence", icon: Boxes },
     { slug: "supplier-intelligence", label: "Supplier Intelligence", icon: Truck, phase: 3, blurb: "Reliability, lead-time variance and risk scoring per supplier." },
     { slug: "risk-lab", label: "Risk & Disruption Lab", icon: ShieldAlert, phase: 3, blurb: "Simulate delays, price shocks and supplier failures." },
@@ -23,8 +23,8 @@ export const navGroups: NavGroup[] = [
     { slug: "products", label: "Products", icon: Package },
     { slug: "suppliers", label: "Suppliers", icon: Building2 },
     { slug: "warehouses", label: "Warehouses", icon: Warehouse },
-    { slug: "purchase-orders", label: "Purchase Orders", icon: FileText, phase: 2, blurb: "Draft, approve and receive purchase orders that update stock." },
-    { slug: "import", label: "Data Import Center", icon: Upload, phase: 2, blurb: "Upload CSV or Excel files with column mapping and validation." },
+    { slug: "purchase-orders", label: "Purchase Orders", icon: FileText },
+    { slug: "import", label: "Data Import Center", icon: Upload },
     { slug: "reports", label: "Reports & Analytics", icon: BarChart3, phase: 4, blurb: "Exportable reports across stock, purchases and suppliers." },
   ]},
   { label: "Workspace", items: [
