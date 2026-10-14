@@ -15,6 +15,13 @@
       "when": 1791797774528,
       "tag": "0001_phase2_sales_purchase_orders",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791969046697,
+      "tag": "0002_phase3_audit_log",
+      "breakpoints": true
     }
   ]
 }
