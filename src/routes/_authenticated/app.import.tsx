@@ -45,10 +45,10 @@ function ImportCenter() {
   async function onFile(f: File) {
     const XLSX = await import("xlsx");
     const wb = XLSX.read(await f.arrayBuffer(), { cellDates: true });
-    const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(wb.Sheets[wb.SheetNames[0]], { defval: "" });
-    if (!rows.length) return toast.error("That file has no data rows.");
-    if (rows.length > 20000) return toast.error("Please split files over 20,000 rows.");
-    const h = Object.keys(rows[0]);
+    const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(wb.Sheets[wb.SheetNames[0]!]!, { defval: "" });
+    if (!rows.length) return void toast.error("That file has no data rows.");
+    if (rows.length > 20000) return void toast.error("Please split files over 20,000 rows.");
+    const h = Object.keys(rows[0]!);
     setFile(f.name); setRaw(rows); setHeaders(h); setMap(autoMap(h, def.fields)); setResult(null);
   }
 
@@ -62,7 +62,7 @@ function ImportCenter() {
     const cid = company!.id;
     setBusy(true);
     try {
-      const vals = good.map((g) => g.values);
+      const vals: any[] = good.map((g) => g.values);
       let skipped = 0;
       const lookup = async () => {
         const [p, w, s] = await Promise.all([
