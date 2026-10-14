@@ -62,7 +62,7 @@ function ImportCenter() {
     const cid = company!.id;
     setBusy(true);
     try {
-      const vals = good.map((g) => g.values);
+      const vals: any[] = good.map((g) => g.values);
       let skipped = 0;
       const lookup = async () => {
         const [p, w, s] = await Promise.all([
