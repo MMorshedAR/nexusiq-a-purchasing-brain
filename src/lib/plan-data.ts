@@ -8,7 +8,7 @@ export const HOLDING_RATE = 0.2; // 20% of unit cost per year (assumption, shown
 
 export type PlanRow = {
   id: string; sku: string; name: string; category: string | null; supplierId: string | null; supplier: string | null;
-  unitCost: number; leadDays: number; onHand: number; onOrder: number;
+  unitCost: number; sellPrice: number; leadDays: number; onHand: number; onOrder: number;
   series: number[]; avgDaily: number; sd: number; slope: number; forecast30: number; forecastDaily: number[];
   hasHistory: boolean; ss: number; rop: number; eoq: number; suggested: number; daysCover: number | null; priority: number;
 };
@@ -18,7 +18,7 @@ export async function loadPlanning(companyId: string) {
   const start = new Date(end.getTime() - (HISTORY_DAYS - 1) * 86400000).toISOString().slice(0, 10);
   const [stock, prods, sales, open] = await Promise.all([
     loadStock(companyId),
-    supabase.from("products").select("id, supplier_id, lead_time_days").eq("company_id", companyId),
+    supabase.from("products").select("id, supplier_id, lead_time_days, sell_price").eq("company_id", companyId),
     supabase.from("sales_history").select("product_id, sale_date, quantity").eq("company_id", companyId).gte("sale_date", start).limit(50000),
     supabase.from("po_items").select("product_id, quantity, purchase_orders!inner(status)").eq("company_id", companyId).eq("purchase_orders.status", "approved"),
   ]);
@@ -48,7 +48,7 @@ export async function loadPlanning(companyId: string) {
     const oo = onOrder.get(r.id) ?? 0;
     return {
       id: r.id, sku: r.sku, name: r.name, category: r.category, supplierId: m?.supplier_id ?? null, supplier: r.supplier,
-      unitCost: r.unit_cost, leadDays, onHand: r.onHand, onOrder: oo,
+      unitCost: r.unit_cost, sellPrice: Number(m?.sell_price ?? 0), leadDays, onHand: r.onHand, onOrder: oo,
       series, avgDaily, sd, slope: f.slope, forecast30: f.total, forecastDaily: f.daily, hasHistory,
       ss, rop, eoq: e,
       suggested: suggestedQty({ onHand: r.onHand, onOrder: oo, rop, avgDaily, eoq: e }),

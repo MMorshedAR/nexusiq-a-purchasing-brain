@@ -17,12 +17,17 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppSectionRouteImport } from './routes/_authenticated/app.$section'
+import { Route as AuthenticatedAppActivityRouteImport } from './routes/_authenticated/app.activity'
+import { Route as AuthenticatedAppCashFlowRouteImport } from './routes/_authenticated/app.cash-flow'
 import { Route as AuthenticatedAppForecastsRouteImport } from './routes/_authenticated/app.forecasts'
 import { Route as AuthenticatedAppImportRouteImport } from './routes/_authenticated/app.import'
 import { Route as AuthenticatedAppInventoryRouteImport } from './routes/_authenticated/app.inventory'
 import { Route as AuthenticatedAppProductsRouteImport } from './routes/_authenticated/app.products'
 import { Route as AuthenticatedAppPurchaseOrdersRouteImport } from './routes/_authenticated/app.purchase-orders'
 import { Route as AuthenticatedAppReorderRouteImport } from './routes/_authenticated/app.reorder'
+import { Route as AuthenticatedAppRiskLabRouteImport } from './routes/_authenticated/app.risk-lab'
+import { Route as AuthenticatedAppSavingsRouteImport } from './routes/_authenticated/app.savings'
+import { Route as AuthenticatedAppSupplierIntelligenceRouteImport } from './routes/_authenticated/app.supplier-intelligence'
 import { Route as AuthenticatedAppSuppliersRouteImport } from './routes/_authenticated/app.suppliers'
 import { Route as AuthenticatedAppWarehousesRouteImport } from './routes/_authenticated/app.warehouses'
 
@@ -65,6 +70,18 @@ const AuthenticatedAppSectionRoute = AuthenticatedAppSectionRouteImport.update({
   path: '/$section',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppActivityRoute =
+  AuthenticatedAppActivityRouteImport.update({
+    id: '/activity',
+    path: '/activity',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppCashFlowRoute =
+  AuthenticatedAppCashFlowRouteImport.update({
+    id: '/cash-flow',
+    path: '/cash-flow',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppForecastsRoute =
   AuthenticatedAppForecastsRouteImport.update({
     id: '/forecasts',
@@ -99,6 +116,22 @@ const AuthenticatedAppReorderRoute = AuthenticatedAppReorderRouteImport.update({
   path: '/reorder',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppRiskLabRoute = AuthenticatedAppRiskLabRouteImport.update({
+  id: '/risk-lab',
+  path: '/risk-lab',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppSavingsRoute = AuthenticatedAppSavingsRouteImport.update({
+  id: '/savings',
+  path: '/savings',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppSupplierIntelligenceRoute =
+  AuthenticatedAppSupplierIntelligenceRouteImport.update({
+    id: '/supplier-intelligence',
+    path: '/supplier-intelligence',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppSuppliersRoute =
   AuthenticatedAppSuppliersRouteImport.update({
     id: '/suppliers',
@@ -119,12 +152,17 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/app/$section': typeof AuthenticatedAppSectionRoute
+  '/app/activity': typeof AuthenticatedAppActivityRoute
+  '/app/cash-flow': typeof AuthenticatedAppCashFlowRoute
   '/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/app/import': typeof AuthenticatedAppImportRoute
   '/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/app/products': typeof AuthenticatedAppProductsRoute
   '/app/purchase-orders': typeof AuthenticatedAppPurchaseOrdersRoute
   '/app/reorder': typeof AuthenticatedAppReorderRoute
+  '/app/risk-lab': typeof AuthenticatedAppRiskLabRoute
+  '/app/savings': typeof AuthenticatedAppSavingsRoute
+  '/app/supplier-intelligence': typeof AuthenticatedAppSupplierIntelligenceRoute
   '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
   '/app/warehouses': typeof AuthenticatedAppWarehousesRoute
   '/app/': typeof AuthenticatedAppIndexRoute
@@ -135,12 +173,17 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/app/$section': typeof AuthenticatedAppSectionRoute
+  '/app/activity': typeof AuthenticatedAppActivityRoute
+  '/app/cash-flow': typeof AuthenticatedAppCashFlowRoute
   '/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/app/import': typeof AuthenticatedAppImportRoute
   '/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/app/products': typeof AuthenticatedAppProductsRoute
   '/app/purchase-orders': typeof AuthenticatedAppPurchaseOrdersRoute
   '/app/reorder': typeof AuthenticatedAppReorderRoute
+  '/app/risk-lab': typeof AuthenticatedAppRiskLabRoute
+  '/app/savings': typeof AuthenticatedAppSavingsRoute
+  '/app/supplier-intelligence': typeof AuthenticatedAppSupplierIntelligenceRoute
   '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
   '/app/warehouses': typeof AuthenticatedAppWarehousesRoute
   '/app': typeof AuthenticatedAppIndexRoute
@@ -154,12 +197,17 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/app/$section': typeof AuthenticatedAppSectionRoute
+  '/_authenticated/app/activity': typeof AuthenticatedAppActivityRoute
+  '/_authenticated/app/cash-flow': typeof AuthenticatedAppCashFlowRoute
   '/_authenticated/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/_authenticated/app/import': typeof AuthenticatedAppImportRoute
   '/_authenticated/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/_authenticated/app/products': typeof AuthenticatedAppProductsRoute
   '/_authenticated/app/purchase-orders': typeof AuthenticatedAppPurchaseOrdersRoute
   '/_authenticated/app/reorder': typeof AuthenticatedAppReorderRoute
+  '/_authenticated/app/risk-lab': typeof AuthenticatedAppRiskLabRoute
+  '/_authenticated/app/savings': typeof AuthenticatedAppSavingsRoute
+  '/_authenticated/app/supplier-intelligence': typeof AuthenticatedAppSupplierIntelligenceRoute
   '/_authenticated/app/suppliers': typeof AuthenticatedAppSuppliersRoute
   '/_authenticated/app/warehouses': typeof AuthenticatedAppWarehousesRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
@@ -173,12 +221,17 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/app'
     | '/app/$section'
+    | '/app/activity'
+    | '/app/cash-flow'
     | '/app/forecasts'
     | '/app/import'
     | '/app/inventory'
     | '/app/products'
     | '/app/purchase-orders'
     | '/app/reorder'
+    | '/app/risk-lab'
+    | '/app/savings'
+    | '/app/supplier-intelligence'
     | '/app/suppliers'
     | '/app/warehouses'
     | '/app/'
@@ -189,12 +242,17 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/app/$section'
+    | '/app/activity'
+    | '/app/cash-flow'
     | '/app/forecasts'
     | '/app/import'
     | '/app/inventory'
     | '/app/products'
     | '/app/purchase-orders'
     | '/app/reorder'
+    | '/app/risk-lab'
+    | '/app/savings'
+    | '/app/supplier-intelligence'
     | '/app/suppliers'
     | '/app/warehouses'
     | '/app'
@@ -207,12 +265,17 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/app'
     | '/_authenticated/app/$section'
+    | '/_authenticated/app/activity'
+    | '/_authenticated/app/cash-flow'
     | '/_authenticated/app/forecasts'
     | '/_authenticated/app/import'
     | '/_authenticated/app/inventory'
     | '/_authenticated/app/products'
     | '/_authenticated/app/purchase-orders'
     | '/_authenticated/app/reorder'
+    | '/_authenticated/app/risk-lab'
+    | '/_authenticated/app/savings'
+    | '/_authenticated/app/supplier-intelligence'
     | '/_authenticated/app/suppliers'
     | '/_authenticated/app/warehouses'
     | '/_authenticated/app/'
@@ -284,6 +347,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppSectionRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/activity': {
+      id: '/_authenticated/app/activity'
+      path: '/activity'
+      fullPath: '/app/activity'
+      preLoaderRoute: typeof AuthenticatedAppActivityRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/cash-flow': {
+      id: '/_authenticated/app/cash-flow'
+      path: '/cash-flow'
+      fullPath: '/app/cash-flow'
+      preLoaderRoute: typeof AuthenticatedAppCashFlowRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/forecasts': {
       id: '/_authenticated/app/forecasts'
       path: '/forecasts'
@@ -326,6 +403,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppReorderRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/risk-lab': {
+      id: '/_authenticated/app/risk-lab'
+      path: '/risk-lab'
+      fullPath: '/app/risk-lab'
+      preLoaderRoute: typeof AuthenticatedAppRiskLabRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/savings': {
+      id: '/_authenticated/app/savings'
+      path: '/savings'
+      fullPath: '/app/savings'
+      preLoaderRoute: typeof AuthenticatedAppSavingsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/supplier-intelligence': {
+      id: '/_authenticated/app/supplier-intelligence'
+      path: '/supplier-intelligence'
+      fullPath: '/app/supplier-intelligence'
+      preLoaderRoute: typeof AuthenticatedAppSupplierIntelligenceRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/suppliers': {
       id: '/_authenticated/app/suppliers'
       path: '/suppliers'
@@ -345,12 +443,17 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAppRouteChildren {
   AuthenticatedAppSectionRoute: typeof AuthenticatedAppSectionRoute
+  AuthenticatedAppActivityRoute: typeof AuthenticatedAppActivityRoute
+  AuthenticatedAppCashFlowRoute: typeof AuthenticatedAppCashFlowRoute
   AuthenticatedAppForecastsRoute: typeof AuthenticatedAppForecastsRoute
   AuthenticatedAppImportRoute: typeof AuthenticatedAppImportRoute
   AuthenticatedAppInventoryRoute: typeof AuthenticatedAppInventoryRoute
   AuthenticatedAppProductsRoute: typeof AuthenticatedAppProductsRoute
   AuthenticatedAppPurchaseOrdersRoute: typeof AuthenticatedAppPurchaseOrdersRoute
   AuthenticatedAppReorderRoute: typeof AuthenticatedAppReorderRoute
+  AuthenticatedAppRiskLabRoute: typeof AuthenticatedAppRiskLabRoute
+  AuthenticatedAppSavingsRoute: typeof AuthenticatedAppSavingsRoute
+  AuthenticatedAppSupplierIntelligenceRoute: typeof AuthenticatedAppSupplierIntelligenceRoute
   AuthenticatedAppSuppliersRoute: typeof AuthenticatedAppSuppliersRoute
   AuthenticatedAppWarehousesRoute: typeof AuthenticatedAppWarehousesRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
@@ -358,12 +461,18 @@ interface AuthenticatedAppRouteChildren {
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppSectionRoute: AuthenticatedAppSectionRoute,
+  AuthenticatedAppActivityRoute: AuthenticatedAppActivityRoute,
+  AuthenticatedAppCashFlowRoute: AuthenticatedAppCashFlowRoute,
   AuthenticatedAppForecastsRoute: AuthenticatedAppForecastsRoute,
   AuthenticatedAppImportRoute: AuthenticatedAppImportRoute,
   AuthenticatedAppInventoryRoute: AuthenticatedAppInventoryRoute,
   AuthenticatedAppProductsRoute: AuthenticatedAppProductsRoute,
   AuthenticatedAppPurchaseOrdersRoute: AuthenticatedAppPurchaseOrdersRoute,
   AuthenticatedAppReorderRoute: AuthenticatedAppReorderRoute,
+  AuthenticatedAppRiskLabRoute: AuthenticatedAppRiskLabRoute,
+  AuthenticatedAppSavingsRoute: AuthenticatedAppSavingsRoute,
+  AuthenticatedAppSupplierIntelligenceRoute:
+    AuthenticatedAppSupplierIntelligenceRoute,
   AuthenticatedAppSuppliersRoute: AuthenticatedAppSuppliersRoute,
   AuthenticatedAppWarehousesRoute: AuthenticatedAppWarehousesRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
