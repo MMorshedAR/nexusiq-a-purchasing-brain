@@ -50,7 +50,7 @@ function Planner() {
         n++;
         const { data: po, error } = await supabase.from("purchase_orders").insert({
           company_id: company!.id, po_number: `PO-${stamp}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
-          supplier_id: sup === "none" ? null : sup, warehouse_id: wh || null, created_by: user?.id, notes: "Created from Smart Reorder Planner",
+          supplier_id: sup === "none" ? null : sup, warehouse_id: wh || null, created_by: user?.id ?? null, notes: "Created from Smart Reorder Planner",
         }).select("id").single();
         if (error) throw error;
         const { error: e2 } = await supabase.from("po_items").insert(items.map((r) => ({ company_id: company!.id, po_id: po.id, product_id: r.id, quantity: byId.get(r.id)!.fundedQty, unit_cost: r.unitCost })));

@@ -7,7 +7,7 @@ export function dailySeries(sales: Sale[], days: number, end: Date): number[] {
   const out = new Array(days).fill(0);
   const endUtc = Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate());
   for (const s of sales) {
-    const [y, m, d] = s.sale_date.slice(0, 10).split("-").map(Number);
+    const [y = 0, m = 1, d = 1] = s.sale_date.slice(0, 10).split("-").map(Number);
     const idx = days - 1 - Math.round((endUtc - Date.UTC(y, m - 1, d)) / 86400000);
     if (idx >= 0 && idx < days) out[idx] += s.quantity;
   }

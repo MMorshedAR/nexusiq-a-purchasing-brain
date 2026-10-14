@@ -166,7 +166,7 @@ function CreatePO({ onClose }: { onClose: () => void }) {
       const stamp = new Date().toISOString().slice(2, 10).replace(/-/g, "");
       const { data: po, error } = await supabase.from("purchase_orders").insert({
         company_id: company!.id, po_number: `PO-${stamp}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
-        supplier_id: supplier || null, warehouse_id: warehouse || opts.data?.warehouses[0]?.id || null, expected_date: expected || null, created_by: user?.id,
+        supplier_id: supplier || null, warehouse_id: warehouse || opts.data?.warehouses[0]?.id || null, expected_date: expected || null, created_by: user?.id ?? null,
       }).select("id").single();
       if (error) throw error;
       const { error: e2 } = await supabase.from("po_items").insert(valid.map((l) => ({ ...l, company_id: company!.id, po_id: po.id })));
