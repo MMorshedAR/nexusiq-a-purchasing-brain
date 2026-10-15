@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { loadStock } from "@/lib/stock";
 import { Bell, Building2, Check, ChevronsUpDown, LogOut, Search, Sparkles, Upload } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { WorkspaceProvider, useWorkspace } from "@/lib/workspace";
@@ -130,12 +131,41 @@ function WorkspaceSwitcher() {
 }
 
 function Notifications() {
+  const { company } = useWorkspace();
+  const navigate = useNavigate();
+  const q = useQuery({
+    queryKey: ["alerts", company?.id], enabled: !!company, refetchInterval: 120000,
+    queryFn: async () => {
+      const [stock, po] = await Promise.all([
+        loadStock(company!.id),
+        supabase.from("purchase_orders").select("id, po_number, expected_date").eq("company_id", company!.id).eq("status", "approved").lt("expected_date", new Date().toISOString().slice(0, 10)),
+      ]);
+      const alerts: { key: string; tone: string; text: string; to: string }[] = [];
+      for (const r of stock.rows.filter((r) => r.status === "out").slice(0, 5)) alerts.push({ key: "o" + r.id, tone: "bg-destructive", text: `${r.name} is out of stock`, to: "/app/inventory" });
+      for (const r of stock.rows.filter((r) => r.status === "low").slice(0, 5)) alerts.push({ key: "l" + r.id, tone: "bg-warning", text: `${r.name} is at its reorder point`, to: "/app/reorder" });
+      for (const p of po.data ?? []) alerts.push({ key: "p" + p.id, tone: "bg-warning", text: `${p.po_number} is overdue (expected ${p.expected_date})`, to: "/app/purchase-orders" });
+      return alerts;
+    },
+  });
+  const alerts = q.data ?? [];
   return (
     <Popover>
-      <PopoverTrigger asChild><Button variant="ghost" size="icon" aria-label="Notifications"><Bell /></Button></PopoverTrigger>
-      <PopoverContent align="end" className="w-72 text-sm">
+      <PopoverTrigger asChild>
+        <Button variant="ghost" size="icon" aria-label="Notifications" className="relative"><Bell />
+          {alerts.length > 0 && <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-destructive px-1 text-[10px] text-destructive-foreground">{alerts.length}</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="end" className="w-80 text-sm">
         <p className="font-medium">Notifications</p>
-        <p className="mt-2 text-muted-foreground">You're all caught up. Stock and supplier alerts will appear here.</p>
+        {alerts.length === 0 ? <p className="mt-2 text-muted-foreground">You're all caught up.</p> : (
+          <ul className="mt-2 divide-y">
+            {alerts.map((a) => (
+              <li key={a.key}><button className="flex w-full items-start gap-2 py-2 text-left hover:text-primary" onClick={() => navigate({ to: a.to })}>
+                <span className={"mt-1.5 h-2 w-2 shrink-0 rounded-full " + a.tone} />{a.text}
+              </button></li>
+            ))}
+          </ul>
+        )}
       </PopoverContent>
     </Popover>
   );

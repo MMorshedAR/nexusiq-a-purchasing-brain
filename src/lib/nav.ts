@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, BrainCircuit, TrendingUp, ShoppingCart, Boxes, Truck, ShieldAlert, Wallet, PiggyBank,
-  Package, Building2, Warehouse, FileText, Upload, BarChart3, Users, Plug, CreditCard, Settings, LifeBuoy,
+  Package, Building2, Warehouse, FileText, Upload, BarChart3, Users, Plug, CreditCard, Settings, LifeBuoy, History,
   type LucideIcon,
 } from "lucide-react";
 
@@ -14,10 +14,10 @@ export const navGroups: NavGroup[] = [
     { slug: "forecasts", label: "Demand Forecasts", icon: TrendingUp },
     { slug: "reorder", label: "Smart Reorder Planner", icon: ShoppingCart },
     { slug: "inventory", label: "Inventory Intelligence", icon: Boxes },
-    { slug: "supplier-intelligence", label: "Supplier Intelligence", icon: Truck, phase: 3, blurb: "Reliability, lead-time variance and risk scoring per supplier." },
-    { slug: "risk-lab", label: "Risk & Disruption Lab", icon: ShieldAlert, phase: 3, blurb: "Simulate delays, price shocks and supplier failures." },
-    { slug: "cash-flow", label: "Cash Flow Optimizer", icon: Wallet, phase: 3, blurb: "See how purchases affect cash over the coming weeks." },
-    { slug: "savings", label: "Savings & Impact", icon: PiggyBank, phase: 3, blurb: "Track money saved and stockouts prevented." },
+    { slug: "supplier-intelligence", label: "Supplier Intelligence", icon: Truck },
+    { slug: "risk-lab", label: "Risk & Disruption Lab", icon: ShieldAlert },
+    { slug: "cash-flow", label: "Cash Flow Optimizer", icon: Wallet },
+    { slug: "savings", label: "Savings & Impact", icon: PiggyBank },
   ]},
   { label: "Operations", items: [
     { slug: "products", label: "Products", icon: Package },
@@ -28,6 +28,7 @@ export const navGroups: NavGroup[] = [
     { slug: "reports", label: "Reports & Analytics", icon: BarChart3, phase: 4, blurb: "Exportable reports across stock, purchases and suppliers." },
   ]},
   { label: "Workspace", items: [
+    { slug: "activity", label: "Activity log", icon: History },
     { slug: "team", label: "Team & Permissions", icon: Users, phase: 4, blurb: "Invite teammates and assign roles." },
     { slug: "integrations", label: "Integrations", icon: Plug, phase: 4, blurb: "Connections to accounting and e-commerce tools." },
     { slug: "billing", label: "Billing & Plans", icon: CreditCard, phase: 4, blurb: "Starter ৳1,000 · Growth ৳5,000 · Enterprise ৳20,000 per month." },
