@@ -14,3 +14,4 @@
 - App pages live under src/routes/_authenticated/app.*; unbuilt sidebar items render via app.$section with a "not available yet" state — no fake actions.
 - Workspace tools remain separate authenticated file routes; public invite-preview routes expose only invitation details and never workspace records.
 - Saved AI threads belong to one company member; verify the bearer and thread owner before assembling saved history or workspace context, keeping model credentials server-side.
+- Enforce Owner-only role changes and immutable workspace-member identity in database triggers/policies, because client-side role controls are not a security boundary.

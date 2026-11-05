@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/page-header";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export const Route = createFileRoute("/_authenticated/app/activity")({
-  head: () => ({ meta: [{ title: "Activity log — NexusIQ" }, { name: "description", content: "Who changed what in your workspace." }, { property: "og:title", content: "Activity log — NexusIQ" }, { property: "og:description", content: "Workspace audit history." }] }),
+  head: () => ({ meta: [{ title: "Activity log — NexusIQ" }, { name: "description", content: "Who changed what in your workspace." }, { property: "og:title", content: "Activity log — NexusIQ" }, { property: "og:description", content: "Workspace audit history." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Activity,
 });
 

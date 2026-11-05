@@ -140,7 +140,7 @@ function ChatSession({ threadId, thread, threads, initialMessages, companyId, cr
         {chat.messages.length === 0 ? <ConversationEmptyState title="Ask Nexus AI" description="Ask about your products, suppliers, inventory or purchasing." icon={<Bot className="h-8 w-8" />} /> : chat.messages.map((message) => <Message key={message.id} from={message.role} className="max-w-full">
           {message.parts.map((part, index) => {
             if (part.type === "text") return <MessageContent key={`${message.id}-text-${index}`} className={message.role === "user" ? "bg-primary text-primary-foreground" : "bg-transparent px-0 py-1"}><MessageResponse>{part.text}</MessageResponse></MessageContent>;
-            if (part.type === "reasoning") return <details key={`${message.id}-reasoning-${index}`} className="text-xs text-muted-foreground"><summary className="cursor-pointer">Reasoning</summary><p className="mt-2 whitespace-pre-wrap">{part.text}</p></details>;
+            if (part.type === "reasoning") return null;
             if (part.type === "dynamic-tool") {
               const tool = part as Extract<ToolPart, { type: "dynamic-tool" }>;
               return <Tool key={`${message.id}-tool-${index}`} defaultOpen={false}><ToolHeader type="dynamic-tool" toolName={tool.toolName} state={tool.state} /><ToolContent>{tool.input != null && <ToolInput input={tool.input} />}{(tool.state === "output-available" || tool.state === "output-error") && <ToolOutput output={tool.output} errorText={tool.errorText} />}</ToolContent></Tool>;

@@ -30,7 +30,7 @@ export function createResponsesCall(request: Request, config: { baseURL: string;
       onFinish: (event: { responseMessage: UIMessage; isAborted: boolean; isCancelled?: true }) => void | Promise<void>,
     ) => withLovableAiGatewayRunIdHeader(result.toUIMessageStreamResponse({
       originalMessages,
-      sendReasoning: true,
+      sendReasoning: false,
       onError: (error) => {
         console.error("Nexus AI stream failed", error);
         return error instanceof Error ? error.message : "Nexus AI could not complete this request.";
