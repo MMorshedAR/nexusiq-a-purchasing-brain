@@ -50,6 +50,13 @@
       "when": 1793892618743,
       "tag": "0006_chat_message_keys_and_invite_preview",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793893566316,
+      "tag": "0007_secure_chat_thread_messages_and_invite_claim",
+      "breakpoints": true
     }
   ]
 }

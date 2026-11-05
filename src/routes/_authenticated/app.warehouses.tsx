@@ -3,7 +3,7 @@ import { EntityManager } from "@/components/entity-manager";
 import { formatNumber } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/app/warehouses")({
-  head: () => ({ meta: [{ title: "Warehouses — NexusIQ" }, { name: "description", content: "Manage storage locations." }, { property: "og:title", content: "Warehouses — NexusIQ" }, { property: "og:description", content: "Manage storage locations." }] }),
+  head: () => ({ meta: [{ title: "Warehouses — NexusIQ" }, { name: "description", content: "Manage storage locations." }, { property: "og:title", content: "Warehouses — NexusIQ" }, { property: "og:description", content: "Manage storage locations." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: () => (
     <EntityManager
       table="warehouses" title="Warehouses" singular="Warehouse" description="Where your stock physically sits."

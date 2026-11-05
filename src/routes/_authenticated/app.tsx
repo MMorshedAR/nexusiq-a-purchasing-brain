@@ -2,7 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tan
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { loadStock } from "@/lib/stock";
-import { Bell, Building2, Check, ChevronsUpDown, LogOut, Search, Sparkles, Upload } from "lucide-react";
+import { Bell, Building2, Check, ChevronsUpDown, Languages, LogOut, Search, Sparkles, Upload } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { WorkspaceProvider, useWorkspace } from "@/lib/workspace";
 import { navGroups, allNav } from "@/lib/nav";
@@ -12,27 +12,24 @@ import {
   SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { LanguageProvider, useLanguage } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/app")({
   component: () => (
     <WorkspaceProvider>
-      <Shell />
+      <LanguageProvider><Shell /></LanguageProvider>
     </WorkspaceProvider>
   ),
 });
 
-function hrefFor(slug: string) {
-  return slug ? `/app/${slug}` : "/app";
-}
-
 function Shell() {
   const { company, loading } = useWorkspace();
+  const { language, setLanguage, t } = useLanguage();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [cmd, setCmd] = useState(false);
   const navigate = useNavigate();
@@ -54,19 +51,18 @@ function Shell() {
         <SidebarContent>
           {navGroups.map((g) => (
             <SidebarGroup key={g.label}>
-              <SidebarGroupLabel>{g.label}</SidebarGroupLabel>
+              <SidebarGroupLabel>{t(g.label)}</SidebarGroupLabel>
               <SidebarMenu>
                 {g.items.map((it) => {
-                  const href = hrefFor(it.slug);
-                  const active = it.slug ? pathname.startsWith(href) : pathname === "/app" || pathname === "/app/";
+                  const active = it.slug ? pathname.startsWith(it.to) : pathname === "/app" || pathname === "/app/";
                   return (
                     <SidebarMenuItem key={it.slug}>
                       <SidebarMenuButton asChild isActive={active} tooltip={it.label}>
-                        <a href={href} onClick={(e) => { e.preventDefault(); navigate({ to: href }); }}>
+                        <Link to={it.to}>
                           <it.icon />
-                          <span>{it.label}</span>
+                          <span>{t(it.label)}</span>
                           {it.phase && <span className="ml-auto text-[10px] uppercase tracking-wider opacity-50">soon</span>}
-                        </a>
+                        </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   );
@@ -80,13 +76,13 @@ function Shell() {
         <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b bg-background/90 px-3 backdrop-blur">
           <SidebarTrigger />
           <WorkspaceSwitcher />
-          <button onClick={() => setCmd(true)} className="ml-2 hidden h-9 flex-1 max-w-sm items-center gap-2 rounded-md border bg-card px-3 text-sm text-muted-foreground md:flex">
-            <Search className="h-4 w-4" /> Search pages…<kbd className="ml-auto rounded border px-1.5 text-[10px]">Ctrl K</kbd>
-          </button>
+          <Button variant="outline" onClick={() => setCmd(true)} className="ml-2 hidden h-9 flex-1 max-w-sm items-center justify-start gap-2 bg-card px-3 text-sm text-muted-foreground md:flex">
+            <Search className="h-4 w-4" /> {t("Search pages…")}<kbd className="ml-auto rounded border px-1.5 text-[10px]">Ctrl K</kbd>
+          </Button>
           <div className="ml-auto flex items-center gap-1">
-            <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/app/$section", params: { section: "import" } })}><Upload /> <span className="hidden sm:inline">Upload data</span></Button>
-            <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/app/$section", params: { section: "command-center" } })}><Sparkles /> <span className="hidden sm:inline">Ask Nexus AI</span></Button>
-            <Badge variant="outline" className="hidden lg:inline-flex">Trial</Badge>
+            <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/app/import" })}><Upload /> <span className="hidden sm:inline">{t("Upload data")}</span></Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate({ to: "/app/command-center" })}><Sparkles /> <span className="hidden sm:inline">{t("Ask Nexus AI")}</span></Button>
+            <Button variant="ghost" size="icon" aria-label={t("Language")} title={t("Language")} onClick={() => setLanguage(language === "en" ? "bn" : "en")}><Languages /></Button>
             <Notifications />
             <UserMenu />
           </div>
@@ -94,13 +90,13 @@ function Shell() {
         <main className="p-4 md:p-8"><Outlet /></main>
       </SidebarInset>
       <CommandDialog open={cmd} onOpenChange={setCmd}>
-        <CommandInput placeholder="Jump to…" />
+        <CommandInput placeholder={t("Jump to…")} />
         <CommandList>
           <CommandEmpty>Nothing found.</CommandEmpty>
           <CommandGroup heading="Pages">
             {allNav.map((it) => (
-              <CommandItem key={it.slug} onSelect={() => { setCmd(false); navigate({ to: hrefFor(it.slug) }); }}>
-                <it.icon /> {it.label}
+              <CommandItem key={it.slug} onSelect={() => { setCmd(false); navigate({ to: it.to }); }}>
+                <it.icon /> {t(it.label)}
               </CommandItem>
             ))}
           </CommandGroup>
@@ -132,6 +128,7 @@ function WorkspaceSwitcher() {
 
 function Notifications() {
   const { company } = useWorkspace();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const q = useQuery({
     queryKey: ["alerts", company?.id], enabled: !!company, refetchInterval: 120000,
@@ -140,6 +137,7 @@ function Notifications() {
         loadStock(company!.id),
         supabase.from("purchase_orders").select("id, po_number, expected_date").eq("company_id", company!.id).eq("status", "approved").lt("expected_date", new Date().toISOString().slice(0, 10)),
       ]);
+      if (po.error) throw po.error;
       const alerts: { key: string; tone: string; text: string; to: string }[] = [];
       for (const r of stock.rows.filter((r) => r.status === "out").slice(0, 5)) alerts.push({ key: "o" + r.id, tone: "bg-destructive", text: `${r.name} is out of stock`, to: "/app/inventory" });
       for (const r of stock.rows.filter((r) => r.status === "low").slice(0, 5)) alerts.push({ key: "l" + r.id, tone: "bg-warning", text: `${r.name} is at its reorder point`, to: "/app/reorder" });
@@ -156,8 +154,8 @@ function Notifications() {
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-80 text-sm">
-        <p className="font-medium">Notifications</p>
-        {alerts.length === 0 ? <p className="mt-2 text-muted-foreground">You're all caught up.</p> : (
+        <p className="font-medium">{t("Notifications")}</p>
+        {q.isLoading ? <p className="mt-2 text-muted-foreground">{t("Loading notifications…")}</p> : q.isError ? <p className="mt-2 text-destructive">{t("Notifications could not be loaded.")}</p> : alerts.length === 0 ? <p className="mt-2 text-muted-foreground">{t("You're all caught up.")}</p> : (
           <ul className="mt-2 divide-y">
             {alerts.map((a) => (
               <li key={a.key}><button className="flex w-full items-start gap-2 py-2 text-left hover:text-primary" onClick={() => navigate({ to: a.to })}>
@@ -173,6 +171,7 @@ function Notifications() {
 
 function UserMenu() {
   const { userEmail, userName, role } = useWorkspace();
+  const { t } = useLanguage();
   const qc = useQueryClient();
   const navigate = useNavigate();
   async function signOut() {
@@ -190,10 +189,10 @@ function UserMenu() {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>
           <div>{userName ?? "Account"}</div>
-          <div className="text-xs font-normal text-muted-foreground">{userEmail} · <span className="capitalize">{role}</span></div>
+            <div className="text-xs font-normal text-muted-foreground">{userEmail} · <span className="capitalize">{role}</span></div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={signOut}><LogOut /> Sign out</DropdownMenuItem>
+        <DropdownMenuItem onSelect={signOut}><LogOut /> {t("Sign out")}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -10,7 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export const Route = createFileRoute("/_authenticated/app/supplier-intelligence")({
-  head: () => ({ meta: [{ title: "Supplier Intelligence — NexusIQ" }, { name: "description", content: "Reliability and risk scores for every supplier." }, { property: "og:title", content: "Supplier Intelligence — NexusIQ" }, { property: "og:description", content: "Reliability and risk scores for every supplier." }] }),
+  head: () => ({ meta: [{ title: "Supplier Intelligence — NexusIQ" }, { name: "description", content: "Reliability and risk scores for every supplier." }, { property: "og:title", content: "Supplier Intelligence — NexusIQ" }, { property: "og:description", content: "Reliability and risk scores for every supplier." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: SupplierIntel,
 });
 

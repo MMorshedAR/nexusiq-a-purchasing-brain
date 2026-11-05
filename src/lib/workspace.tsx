@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
+import { claimPendingInvite } from "@/lib/invites";
 
 export type Company = Tables<"companies">;
 export type Membership = { role: string; full_name: string | null; company: Company };
@@ -24,7 +25,12 @@ async function ensurePendingCompany() {
   const pending = user?.user_metadata?.["pending_company"] as
     | { name: string; slug: string; business_type: string; country: string; currency: string; budget: number | null; full_name: string }
     | undefined;
-  if (!user || !pending) return;
+  if (!user) return;
+  if (typeof user.user_metadata?.["pending_invite"] === "string") {
+    await claimPendingInvite(user);
+    return;
+  }
+  if (!pending) return;
   const { count } = await supabase.from("company_members").select("id", { count: "exact", head: true }).eq("user_id", user.id);
   if ((count ?? 0) === 0) {
     await supabase.rpc("create_company", {

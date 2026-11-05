@@ -10,6 +10,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "AI purchasing and supply chain intelligence for Bangladeshi wholesalers, importers, distributors and retailers." },
       { property: "og:title", content: "NexusIQ — Make Every Purchase a Smarter Decision" },
       { property: "og:description", content: "Predict demand. Protect cash flow. Build a resilient supply chain." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Landing,

@@ -16,21 +16,30 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as InviteTokenRouteImport } from './routes/invite.$token'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppSectionRouteImport } from './routes/_authenticated/app.$section'
 import { Route as AuthenticatedAppActivityRouteImport } from './routes/_authenticated/app.activity'
+import { Route as AuthenticatedAppBillingRouteImport } from './routes/_authenticated/app.billing'
 import { Route as AuthenticatedAppCashFlowRouteImport } from './routes/_authenticated/app.cash-flow'
+import { Route as AuthenticatedAppCommandCenterRouteImport } from './routes/_authenticated/app.command-center'
 import { Route as AuthenticatedAppForecastsRouteImport } from './routes/_authenticated/app.forecasts'
+import { Route as AuthenticatedAppHelpRouteImport } from './routes/_authenticated/app.help'
 import { Route as AuthenticatedAppImportRouteImport } from './routes/_authenticated/app.import'
+import { Route as AuthenticatedAppIntegrationsRouteImport } from './routes/_authenticated/app.integrations'
 import { Route as AuthenticatedAppInventoryRouteImport } from './routes/_authenticated/app.inventory'
 import { Route as AuthenticatedAppProductsRouteImport } from './routes/_authenticated/app.products'
 import { Route as AuthenticatedAppPurchaseOrdersRouteImport } from './routes/_authenticated/app.purchase-orders'
 import { Route as AuthenticatedAppReorderRouteImport } from './routes/_authenticated/app.reorder'
+import { Route as AuthenticatedAppReportsRouteImport } from './routes/_authenticated/app.reports'
 import { Route as AuthenticatedAppRiskLabRouteImport } from './routes/_authenticated/app.risk-lab'
 import { Route as AuthenticatedAppSavingsRouteImport } from './routes/_authenticated/app.savings'
+import { Route as AuthenticatedAppSettingsRouteImport } from './routes/_authenticated/app.settings'
 import { Route as AuthenticatedAppSupplierIntelligenceRouteImport } from './routes/_authenticated/app.supplier-intelligence'
 import { Route as AuthenticatedAppSuppliersRouteImport } from './routes/_authenticated/app.suppliers'
+import { Route as AuthenticatedAppTeamRouteImport } from './routes/_authenticated/app.team'
 import { Route as AuthenticatedAppWarehousesRouteImport } from './routes/_authenticated/app.warehouses'
+import { Route as AuthenticatedAppChatThreadIdRouteImport } from './routes/_authenticated/app.chat.$threadId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -66,6 +75,11 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InviteTokenRoute = InviteTokenRouteImport.update({
+  id: '/invite/$token',
+  path: '/invite/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -82,10 +96,21 @@ const AuthenticatedAppActivityRoute =
     path: '/activity',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const AuthenticatedAppBillingRoute = AuthenticatedAppBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppCashFlowRoute =
   AuthenticatedAppCashFlowRouteImport.update({
     id: '/cash-flow',
     path: '/cash-flow',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppCommandCenterRoute =
+  AuthenticatedAppCommandCenterRouteImport.update({
+    id: '/command-center',
+    path: '/command-center',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
 const AuthenticatedAppForecastsRoute =
@@ -94,11 +119,22 @@ const AuthenticatedAppForecastsRoute =
     path: '/forecasts',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const AuthenticatedAppHelpRoute = AuthenticatedAppHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppImportRoute = AuthenticatedAppImportRouteImport.update({
   id: '/import',
   path: '/import',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppIntegrationsRoute =
+  AuthenticatedAppIntegrationsRouteImport.update({
+    id: '/integrations',
+    path: '/integrations',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppInventoryRoute =
   AuthenticatedAppInventoryRouteImport.update({
     id: '/inventory',
@@ -122,6 +158,11 @@ const AuthenticatedAppReorderRoute = AuthenticatedAppReorderRouteImport.update({
   path: '/reorder',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppReportsRoute = AuthenticatedAppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppRiskLabRoute = AuthenticatedAppRiskLabRouteImport.update({
   id: '/risk-lab',
   path: '/risk-lab',
@@ -132,6 +173,12 @@ const AuthenticatedAppSavingsRoute = AuthenticatedAppSavingsRouteImport.update({
   path: '/savings',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppSettingsRoute =
+  AuthenticatedAppSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppSupplierIntelligenceRoute =
   AuthenticatedAppSupplierIntelligenceRouteImport.update({
     id: '/supplier-intelligence',
@@ -144,10 +191,21 @@ const AuthenticatedAppSuppliersRoute =
     path: '/suppliers',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const AuthenticatedAppTeamRoute = AuthenticatedAppTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppWarehousesRoute =
   AuthenticatedAppWarehousesRouteImport.update({
     id: '/warehouses',
     path: '/warehouses',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppChatThreadIdRoute =
+  AuthenticatedAppChatThreadIdRouteImport.update({
+    id: '/chat/$threadId',
+    path: '/chat/$threadId',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
 
@@ -158,21 +216,30 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/api/chat': typeof ApiChatRoute
+  '/invite/$token': typeof InviteTokenRoute
   '/app/$section': typeof AuthenticatedAppSectionRoute
   '/app/activity': typeof AuthenticatedAppActivityRoute
+  '/app/billing': typeof AuthenticatedAppBillingRoute
   '/app/cash-flow': typeof AuthenticatedAppCashFlowRoute
+  '/app/command-center': typeof AuthenticatedAppCommandCenterRoute
   '/app/forecasts': typeof AuthenticatedAppForecastsRoute
+  '/app/help': typeof AuthenticatedAppHelpRoute
   '/app/import': typeof AuthenticatedAppImportRoute
+  '/app/integrations': typeof AuthenticatedAppIntegrationsRoute
   '/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/app/products': typeof AuthenticatedAppProductsRoute
   '/app/purchase-orders': typeof AuthenticatedAppPurchaseOrdersRoute
   '/app/reorder': typeof AuthenticatedAppReorderRoute
+  '/app/reports': typeof AuthenticatedAppReportsRoute
   '/app/risk-lab': typeof AuthenticatedAppRiskLabRoute
   '/app/savings': typeof AuthenticatedAppSavingsRoute
+  '/app/settings': typeof AuthenticatedAppSettingsRoute
   '/app/supplier-intelligence': typeof AuthenticatedAppSupplierIntelligenceRoute
   '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
+  '/app/team': typeof AuthenticatedAppTeamRoute
   '/app/warehouses': typeof AuthenticatedAppWarehousesRoute
   '/app/': typeof AuthenticatedAppIndexRoute
+  '/app/chat/$threadId': typeof AuthenticatedAppChatThreadIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -180,21 +247,30 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/api/chat': typeof ApiChatRoute
+  '/invite/$token': typeof InviteTokenRoute
   '/app/$section': typeof AuthenticatedAppSectionRoute
   '/app/activity': typeof AuthenticatedAppActivityRoute
+  '/app/billing': typeof AuthenticatedAppBillingRoute
   '/app/cash-flow': typeof AuthenticatedAppCashFlowRoute
+  '/app/command-center': typeof AuthenticatedAppCommandCenterRoute
   '/app/forecasts': typeof AuthenticatedAppForecastsRoute
+  '/app/help': typeof AuthenticatedAppHelpRoute
   '/app/import': typeof AuthenticatedAppImportRoute
+  '/app/integrations': typeof AuthenticatedAppIntegrationsRoute
   '/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/app/products': typeof AuthenticatedAppProductsRoute
   '/app/purchase-orders': typeof AuthenticatedAppPurchaseOrdersRoute
   '/app/reorder': typeof AuthenticatedAppReorderRoute
+  '/app/reports': typeof AuthenticatedAppReportsRoute
   '/app/risk-lab': typeof AuthenticatedAppRiskLabRoute
   '/app/savings': typeof AuthenticatedAppSavingsRoute
+  '/app/settings': typeof AuthenticatedAppSettingsRoute
   '/app/supplier-intelligence': typeof AuthenticatedAppSupplierIntelligenceRoute
   '/app/suppliers': typeof AuthenticatedAppSuppliersRoute
+  '/app/team': typeof AuthenticatedAppTeamRoute
   '/app/warehouses': typeof AuthenticatedAppWarehousesRoute
   '/app': typeof AuthenticatedAppIndexRoute
+  '/app/chat/$threadId': typeof AuthenticatedAppChatThreadIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -205,21 +281,30 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/api/chat': typeof ApiChatRoute
+  '/invite/$token': typeof InviteTokenRoute
   '/_authenticated/app/$section': typeof AuthenticatedAppSectionRoute
   '/_authenticated/app/activity': typeof AuthenticatedAppActivityRoute
+  '/_authenticated/app/billing': typeof AuthenticatedAppBillingRoute
   '/_authenticated/app/cash-flow': typeof AuthenticatedAppCashFlowRoute
+  '/_authenticated/app/command-center': typeof AuthenticatedAppCommandCenterRoute
   '/_authenticated/app/forecasts': typeof AuthenticatedAppForecastsRoute
+  '/_authenticated/app/help': typeof AuthenticatedAppHelpRoute
   '/_authenticated/app/import': typeof AuthenticatedAppImportRoute
+  '/_authenticated/app/integrations': typeof AuthenticatedAppIntegrationsRoute
   '/_authenticated/app/inventory': typeof AuthenticatedAppInventoryRoute
   '/_authenticated/app/products': typeof AuthenticatedAppProductsRoute
   '/_authenticated/app/purchase-orders': typeof AuthenticatedAppPurchaseOrdersRoute
   '/_authenticated/app/reorder': typeof AuthenticatedAppReorderRoute
+  '/_authenticated/app/reports': typeof AuthenticatedAppReportsRoute
   '/_authenticated/app/risk-lab': typeof AuthenticatedAppRiskLabRoute
   '/_authenticated/app/savings': typeof AuthenticatedAppSavingsRoute
+  '/_authenticated/app/settings': typeof AuthenticatedAppSettingsRoute
   '/_authenticated/app/supplier-intelligence': typeof AuthenticatedAppSupplierIntelligenceRoute
   '/_authenticated/app/suppliers': typeof AuthenticatedAppSuppliersRoute
+  '/_authenticated/app/team': typeof AuthenticatedAppTeamRoute
   '/_authenticated/app/warehouses': typeof AuthenticatedAppWarehousesRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
+  '/_authenticated/app/chat/$threadId': typeof AuthenticatedAppChatThreadIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -230,21 +315,30 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/app'
     | '/api/chat'
+    | '/invite/$token'
     | '/app/$section'
     | '/app/activity'
+    | '/app/billing'
     | '/app/cash-flow'
+    | '/app/command-center'
     | '/app/forecasts'
+    | '/app/help'
     | '/app/import'
+    | '/app/integrations'
     | '/app/inventory'
     | '/app/products'
     | '/app/purchase-orders'
     | '/app/reorder'
+    | '/app/reports'
     | '/app/risk-lab'
     | '/app/savings'
+    | '/app/settings'
     | '/app/supplier-intelligence'
     | '/app/suppliers'
+    | '/app/team'
     | '/app/warehouses'
     | '/app/'
+    | '/app/chat/$threadId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -252,21 +346,30 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/api/chat'
+    | '/invite/$token'
     | '/app/$section'
     | '/app/activity'
+    | '/app/billing'
     | '/app/cash-flow'
+    | '/app/command-center'
     | '/app/forecasts'
+    | '/app/help'
     | '/app/import'
+    | '/app/integrations'
     | '/app/inventory'
     | '/app/products'
     | '/app/purchase-orders'
     | '/app/reorder'
+    | '/app/reports'
     | '/app/risk-lab'
     | '/app/savings'
+    | '/app/settings'
     | '/app/supplier-intelligence'
     | '/app/suppliers'
+    | '/app/team'
     | '/app/warehouses'
     | '/app'
+    | '/app/chat/$threadId'
   id:
     | '__root__'
     | '/'
@@ -276,21 +379,30 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/app'
     | '/api/chat'
+    | '/invite/$token'
     | '/_authenticated/app/$section'
     | '/_authenticated/app/activity'
+    | '/_authenticated/app/billing'
     | '/_authenticated/app/cash-flow'
+    | '/_authenticated/app/command-center'
     | '/_authenticated/app/forecasts'
+    | '/_authenticated/app/help'
     | '/_authenticated/app/import'
+    | '/_authenticated/app/integrations'
     | '/_authenticated/app/inventory'
     | '/_authenticated/app/products'
     | '/_authenticated/app/purchase-orders'
     | '/_authenticated/app/reorder'
+    | '/_authenticated/app/reports'
     | '/_authenticated/app/risk-lab'
     | '/_authenticated/app/savings'
+    | '/_authenticated/app/settings'
     | '/_authenticated/app/supplier-intelligence'
     | '/_authenticated/app/suppliers'
+    | '/_authenticated/app/team'
     | '/_authenticated/app/warehouses'
     | '/_authenticated/app/'
+    | '/_authenticated/app/chat/$threadId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -300,6 +412,7 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ApiChatRoute: typeof ApiChatRoute
+  InviteTokenRoute: typeof InviteTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -353,6 +466,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/invite/$token': {
+      id: '/invite/$token'
+      path: '/invite/$token'
+      fullPath: '/invite/$token'
+      preLoaderRoute: typeof InviteTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/app/': {
       id: '/_authenticated/app/'
       path: '/'
@@ -374,11 +494,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppActivityRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/billing': {
+      id: '/_authenticated/app/billing'
+      path: '/billing'
+      fullPath: '/app/billing'
+      preLoaderRoute: typeof AuthenticatedAppBillingRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/cash-flow': {
       id: '/_authenticated/app/cash-flow'
       path: '/cash-flow'
       fullPath: '/app/cash-flow'
       preLoaderRoute: typeof AuthenticatedAppCashFlowRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/command-center': {
+      id: '/_authenticated/app/command-center'
+      path: '/command-center'
+      fullPath: '/app/command-center'
+      preLoaderRoute: typeof AuthenticatedAppCommandCenterRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
     '/_authenticated/app/forecasts': {
@@ -388,11 +522,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppForecastsRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/help': {
+      id: '/_authenticated/app/help'
+      path: '/help'
+      fullPath: '/app/help'
+      preLoaderRoute: typeof AuthenticatedAppHelpRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/import': {
       id: '/_authenticated/app/import'
       path: '/import'
       fullPath: '/app/import'
       preLoaderRoute: typeof AuthenticatedAppImportRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/integrations': {
+      id: '/_authenticated/app/integrations'
+      path: '/integrations'
+      fullPath: '/app/integrations'
+      preLoaderRoute: typeof AuthenticatedAppIntegrationsRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
     '/_authenticated/app/inventory': {
@@ -423,6 +571,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppReorderRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/reports': {
+      id: '/_authenticated/app/reports'
+      path: '/reports'
+      fullPath: '/app/reports'
+      preLoaderRoute: typeof AuthenticatedAppReportsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/risk-lab': {
       id: '/_authenticated/app/risk-lab'
       path: '/risk-lab'
@@ -435,6 +590,13 @@ declare module '@tanstack/react-router' {
       path: '/savings'
       fullPath: '/app/savings'
       preLoaderRoute: typeof AuthenticatedAppSavingsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/settings': {
+      id: '/_authenticated/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AuthenticatedAppSettingsRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
     '/_authenticated/app/supplier-intelligence': {
@@ -451,11 +613,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppSuppliersRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/team': {
+      id: '/_authenticated/app/team'
+      path: '/team'
+      fullPath: '/app/team'
+      preLoaderRoute: typeof AuthenticatedAppTeamRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/warehouses': {
       id: '/_authenticated/app/warehouses'
       path: '/warehouses'
       fullPath: '/app/warehouses'
       preLoaderRoute: typeof AuthenticatedAppWarehousesRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/chat/$threadId': {
+      id: '/_authenticated/app/chat/$threadId'
+      path: '/chat/$threadId'
+      fullPath: '/app/chat/$threadId'
+      preLoaderRoute: typeof AuthenticatedAppChatThreadIdRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
   }
@@ -464,38 +640,54 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAppRouteChildren {
   AuthenticatedAppSectionRoute: typeof AuthenticatedAppSectionRoute
   AuthenticatedAppActivityRoute: typeof AuthenticatedAppActivityRoute
+  AuthenticatedAppBillingRoute: typeof AuthenticatedAppBillingRoute
   AuthenticatedAppCashFlowRoute: typeof AuthenticatedAppCashFlowRoute
+  AuthenticatedAppCommandCenterRoute: typeof AuthenticatedAppCommandCenterRoute
   AuthenticatedAppForecastsRoute: typeof AuthenticatedAppForecastsRoute
+  AuthenticatedAppHelpRoute: typeof AuthenticatedAppHelpRoute
   AuthenticatedAppImportRoute: typeof AuthenticatedAppImportRoute
+  AuthenticatedAppIntegrationsRoute: typeof AuthenticatedAppIntegrationsRoute
   AuthenticatedAppInventoryRoute: typeof AuthenticatedAppInventoryRoute
   AuthenticatedAppProductsRoute: typeof AuthenticatedAppProductsRoute
   AuthenticatedAppPurchaseOrdersRoute: typeof AuthenticatedAppPurchaseOrdersRoute
   AuthenticatedAppReorderRoute: typeof AuthenticatedAppReorderRoute
+  AuthenticatedAppReportsRoute: typeof AuthenticatedAppReportsRoute
   AuthenticatedAppRiskLabRoute: typeof AuthenticatedAppRiskLabRoute
   AuthenticatedAppSavingsRoute: typeof AuthenticatedAppSavingsRoute
+  AuthenticatedAppSettingsRoute: typeof AuthenticatedAppSettingsRoute
   AuthenticatedAppSupplierIntelligenceRoute: typeof AuthenticatedAppSupplierIntelligenceRoute
   AuthenticatedAppSuppliersRoute: typeof AuthenticatedAppSuppliersRoute
+  AuthenticatedAppTeamRoute: typeof AuthenticatedAppTeamRoute
   AuthenticatedAppWarehousesRoute: typeof AuthenticatedAppWarehousesRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
+  AuthenticatedAppChatThreadIdRoute: typeof AuthenticatedAppChatThreadIdRoute
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppSectionRoute: AuthenticatedAppSectionRoute,
   AuthenticatedAppActivityRoute: AuthenticatedAppActivityRoute,
+  AuthenticatedAppBillingRoute: AuthenticatedAppBillingRoute,
   AuthenticatedAppCashFlowRoute: AuthenticatedAppCashFlowRoute,
+  AuthenticatedAppCommandCenterRoute: AuthenticatedAppCommandCenterRoute,
   AuthenticatedAppForecastsRoute: AuthenticatedAppForecastsRoute,
+  AuthenticatedAppHelpRoute: AuthenticatedAppHelpRoute,
   AuthenticatedAppImportRoute: AuthenticatedAppImportRoute,
+  AuthenticatedAppIntegrationsRoute: AuthenticatedAppIntegrationsRoute,
   AuthenticatedAppInventoryRoute: AuthenticatedAppInventoryRoute,
   AuthenticatedAppProductsRoute: AuthenticatedAppProductsRoute,
   AuthenticatedAppPurchaseOrdersRoute: AuthenticatedAppPurchaseOrdersRoute,
   AuthenticatedAppReorderRoute: AuthenticatedAppReorderRoute,
+  AuthenticatedAppReportsRoute: AuthenticatedAppReportsRoute,
   AuthenticatedAppRiskLabRoute: AuthenticatedAppRiskLabRoute,
   AuthenticatedAppSavingsRoute: AuthenticatedAppSavingsRoute,
+  AuthenticatedAppSettingsRoute: AuthenticatedAppSettingsRoute,
   AuthenticatedAppSupplierIntelligenceRoute:
     AuthenticatedAppSupplierIntelligenceRoute,
   AuthenticatedAppSuppliersRoute: AuthenticatedAppSuppliersRoute,
+  AuthenticatedAppTeamRoute: AuthenticatedAppTeamRoute,
   AuthenticatedAppWarehousesRoute: AuthenticatedAppWarehousesRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
+  AuthenticatedAppChatThreadIdRoute: AuthenticatedAppChatThreadIdRoute,
 }
 
 const AuthenticatedAppRouteWithChildren =
@@ -519,6 +711,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ApiChatRoute: ApiChatRoute,
+  InviteTokenRoute: InviteTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

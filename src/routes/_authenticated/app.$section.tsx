@@ -10,7 +10,7 @@ export const Route = createFileRoute("/_authenticated/app/$section")({
   head: ({ params }) => {
     const item = allNav.find((n) => n.slug === params.section);
     const t = `${item?.label ?? "Page"} — NexusIQ`;
-    return { meta: [{ title: t }, { name: "description", content: item?.blurb ?? "" }, { property: "og:title", content: t }, { property: "og:description", content: item?.blurb ?? "" }] };
+    return { meta: [{ title: t }, { name: "description", content: item?.blurb ?? "" }, { property: "og:title", content: t }, { property: "og:description", content: item?.blurb ?? "" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] };
   },
   component: Upcoming,
 });

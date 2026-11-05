@@ -16,7 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 export const Route = createFileRoute("/_authenticated/app/purchase-orders")({
-  head: () => ({ meta: [{ title: "Purchase Orders — NexusIQ" }, { name: "description", content: "Draft, approve and receive purchase orders." }, { property: "og:title", content: "Purchase Orders — NexusIQ" }, { property: "og:description", content: "Draft, approve and receive purchase orders." }] }),
+  head: () => ({ meta: [{ title: "Purchase Orders — NexusIQ" }, { name: "description", content: "Draft, approve and receive purchase orders." }, { property: "og:title", content: "Purchase Orders — NexusIQ" }, { property: "og:description", content: "Draft, approve and receive purchase orders." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: POs,
 });
 

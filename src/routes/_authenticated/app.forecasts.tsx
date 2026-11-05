@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export const Route = createFileRoute("/_authenticated/app/forecasts")({
-  head: () => ({ meta: [{ title: "Demand Forecasts — NexusIQ" }, { name: "description", content: "30-day demand forecasts from your sales history." }, { property: "og:title", content: "Demand Forecasts — NexusIQ" }, { property: "og:description", content: "30-day demand forecasts from your sales history." }] }),
+  head: () => ({ meta: [{ title: "Demand Forecasts — NexusIQ" }, { name: "description", content: "30-day demand forecasts from your sales history." }, { property: "og:title", content: "Demand Forecasts — NexusIQ" }, { property: "og:description", content: "30-day demand forecasts from your sales history." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Forecasts,
 });
 

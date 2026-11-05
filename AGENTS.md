@@ -12,3 +12,5 @@
 - Multi-tenant data: every business table has company_id and RLS via is_company_member/can_edit_company security-definer functions — keeps workspaces isolated.
 - Company creation runs through the create_company RPC (pending signup data held in user metadata until first sign-in) — email confirmation means no session at signup.
 - App pages live under src/routes/_authenticated/app.*; unbuilt sidebar items render via app.$section with a "not available yet" state — no fake actions.
+- Workspace tools remain separate authenticated file routes; public invite-preview routes expose only invitation details and never workspace records.
+- Saved AI threads belong to one company member; verify the bearer and thread owner before assembling saved history or workspace context, keeping model credentials server-side.

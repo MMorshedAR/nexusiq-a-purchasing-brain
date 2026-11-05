@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export const Route = createFileRoute("/_authenticated/app/risk-lab")({
-  head: () => ({ meta: [{ title: "Risk & Disruption Lab — NexusIQ" }, { name: "description", content: "Simulate supplier delays, demand surges and price shocks." }, { property: "og:title", content: "Risk & Disruption Lab — NexusIQ" }, { property: "og:description", content: "Simulate supply chain disruptions." }] }),
+  head: () => ({ meta: [{ title: "Risk & Disruption Lab — NexusIQ" }, { name: "description", content: "Simulate supplier delays, demand surges and price shocks." }, { property: "og:title", content: "Risk & Disruption Lab — NexusIQ" }, { property: "og:description", content: "Simulate supply chain disruptions." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: RiskLab,
 });
 

@@ -8,7 +8,7 @@ import { PageHeader } from "@/components/page-header";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export const Route = createFileRoute("/_authenticated/app/savings")({
-  head: () => ({ meta: [{ title: "Savings & Impact — NexusIQ" }, { name: "description", content: "Cash tied up in overstock, revenue at risk and planner-driven purchasing." }, { property: "og:title", content: "Savings & Impact — NexusIQ" }, { property: "og:description", content: "Financial impact of your purchasing." }] }),
+  head: () => ({ meta: [{ title: "Savings & Impact — NexusIQ" }, { name: "description", content: "Cash tied up in overstock, revenue at risk and planner-driven purchasing." }, { property: "og:title", content: "Savings & Impact — NexusIQ" }, { property: "og:description", content: "Financial impact of your purchasing." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Savings,
 });
 

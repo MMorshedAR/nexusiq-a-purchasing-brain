@@ -57,7 +57,10 @@ export async function withLovableAiGatewayRunIdHeader(response: Response, gatewa
   }
   const reader = response.body.getReader();
   const firstChunk = reader.read();
-  const runId = await gateway.waitForRunId();
+  const runId = await Promise.race([
+    gateway.waitForRunId(),
+    firstChunk.then(() => gateway.getRunId(), () => undefined),
+  ]);
   const headers = getLovableAiGatewayResponseHeaders(undefined, response.headers);
   new Headers(init).forEach((value, name) => headers.set(name, value));
   if (runId) headers.set(LOVABLE_AIG_RUN_ID_HEADER, runId);

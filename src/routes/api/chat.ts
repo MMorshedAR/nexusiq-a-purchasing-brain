@@ -30,30 +30,45 @@ export const Route = createFileRoute("/api/chat")({
       const { data: claims, error: claimError } = await db.auth.getClaims(token);
       if (claimError || !claims?.claims?.sub) return Response.json({ error: "Your sign-in has expired. Please sign in again." }, { status: 401 });
       const userId = claims.claims.sub;
-      const body: unknown = await request.json();
+      const rawBody = await request.text();
+      if (rawBody.length > 500_000) return Response.json({ error: "This chat request is too large." }, { status: 413 });
+      let body: unknown;
+      try { body = JSON.parse(rawBody); }
+      catch { return Response.json({ error: "Invalid chat request." }, { status: 400 }); }
       if (!body || typeof body !== "object") return Response.json({ error: "Invalid chat request." }, { status: 400 });
       const { threadId, messages } = body as { threadId?: unknown; messages?: unknown };
       if (typeof threadId !== "string" || threadId.length > 64) return Response.json({ error: "Choose a valid conversation." }, { status: 400 });
       const { data: thread, error: threadError } = await db.from("chat_threads").select("id, company_id, title").eq("id", threadId).eq("user_id", userId).maybeSingle();
       if (threadError || !thread) return Response.json({ error: "That conversation is unavailable." }, { status: 404 });
       const validated = await safeValidateUIMessages({ messages });
-      if (!validated.success || !validated.data.length || validated.data.at(-1)?.role !== "user") return Response.json({ error: "The latest message is invalid." }, { status: 400 });
-      const uiMessages = validated.data as UIMessage[];
-      const latestUserMessage = uiMessages.at(-1);
+      if (!validated.success || !validated.data.length || validated.data.length > 100 || validated.data.at(-1)?.role !== "user") return Response.json({ error: "The latest message is invalid." }, { status: 400 });
+      const clientMessages = validated.data as UIMessage[];
+      const latestUserMessage = clientMessages.at(-1);
       if (!latestUserMessage) return Response.json({ error: "The latest message is missing." }, { status: 400 });
+      const latestText = latestUserMessage.parts.filter((part) => part.type === "text").map((part) => part.text).join(" ").trim();
+      if (!latestText || latestText.length > 12_000) return Response.json({ error: "Messages must contain text under 12,000 characters." }, { status: 400 });
+      const { data: savedRows, error: historyError } = await db.from("chat_messages").select("id,client_message_id,role,parts,created_at").eq("thread_id", thread.id).order("created_at", { ascending: true }).limit(100);
+      if (historyError) return Response.json({ error: "Saved conversation could not be loaded." }, { status: 500 });
+      const uiMessages: UIMessage[] = (savedRows ?? []).map((row) => ({
+        id: row.client_message_id ?? row.id,
+        role: row.role as "user" | "assistant",
+        parts: row.parts as UIMessage["parts"],
+      }));
+      const alreadySaved = uiMessages.some((item) => item.id === latestUserMessage.id && item.role === "user");
+      if (!alreadySaved) uiMessages.push(latestUserMessage);
       const { error: userSaveError } = await db.from("chat_messages").upsert({
         thread_id: thread.id, company_id: thread.company_id, user_id: userId, client_message_id: latestUserMessage.id,
         role: "user", parts: latestUserMessage.parts as unknown as Json,
       }, { onConflict: "thread_id,client_message_id" });
       if (userSaveError) return Response.json({ error: "Your message could not be saved. Please try again." }, { status: 500 });
-      const text = latestUserMessage.parts.filter((part) => part.type === "text").map((part) => part.text).join(" ").trim();
+      const text = latestText;
       const { error: titleError } = await db.from("chat_threads").update({
         title: thread.title === "New conversation" && text ? text.slice(0, 72) : thread.title,
         updated_at: new Date().toISOString(),
       }).eq("id", thread.id).eq("user_id", userId);
       if (titleError) console.error("Unable to update chat title", titleError.message);
       const [products, suppliers, inventory, orders] = await Promise.all([
-        db.from("products").select("sku,name,category,unit,unit_cost,reorder_point,supplier_id").eq("company_id", thread.company_id).limit(250),
+        db.from("products").select("id,sku,name,category,unit,unit_cost,reorder_point,supplier_id").eq("company_id", thread.company_id).limit(250),
         db.from("suppliers").select("id,name,country,lead_time_days,payment_terms").eq("company_id", thread.company_id).limit(150),
         db.from("inventory").select("product_id,warehouse_id,quantity,warehouses(name)").eq("company_id", thread.company_id).limit(1000),
         db.from("purchase_orders").select("po_number,status,order_date,expected_date,supplier_id").eq("company_id", thread.company_id).order("created_at", { ascending: false }).limit(100),

@@ -4,6 +4,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
+import { claimPendingInvite } from "@/lib/invites";
 import { AuthLayout } from "@/components/auth-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +18,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Sign in to your NexusIQ company workspace." },
       { property: "og:title", content: "Sign in — NexusIQ" },
       { property: "og:description", content: "Sign in to your NexusIQ company workspace." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: SignIn,
@@ -44,6 +47,8 @@ function SignIn() {
       }
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
+      try { await claimPendingInvite(data.user); }
+      catch (inviteError) { toast.error(inviteError instanceof Error ? inviteError.message : "Invitation could not be accepted."); }
       if (slug.trim()) {
         const { data: m } = await supabase
           .from("company_members").select("company_id, companies!inner(slug)")
@@ -66,6 +71,11 @@ function SignIn() {
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/auth" });
     if (r.error) return void toast.error(r.error.message);
     if (r.redirected) return undefined;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      try { await claimPendingInvite(user); }
+      catch (inviteError) { toast.error(inviteError instanceof Error ? inviteError.message : "Invitation could not be accepted."); }
+    }
     navigate({ to: "/app" });
   }
 

@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
 export const Route = createFileRoute("/_authenticated/app/cash-flow")({
-  head: () => ({ meta: [{ title: "Cash Flow Optimizer — NexusIQ" }, { name: "description", content: "12-week cash projection from forecast sales and purchase orders." }, { property: "og:title", content: "Cash Flow Optimizer — NexusIQ" }, { property: "og:description", content: "12-week cash projection." }] }),
+  head: () => ({ meta: [{ title: "Cash Flow Optimizer — NexusIQ" }, { name: "description", content: "12-week cash projection from forecast sales and purchase orders." }, { property: "og:title", content: "Cash Flow Optimizer — NexusIQ" }, { property: "og:description", content: "12-week cash projection." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: CashFlow,
 });
 

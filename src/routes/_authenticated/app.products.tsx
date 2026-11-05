@@ -6,7 +6,7 @@ import { EntityManager } from "@/components/entity-manager";
 import { formatBDT } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/app/products")({
-  head: () => ({ meta: [{ title: "Products — NexusIQ" }, { name: "description", content: "Your product catalogue with costs and reorder settings." }, { property: "og:title", content: "Products — NexusIQ" }, { property: "og:description", content: "Your product catalogue." }] }),
+  head: () => ({ meta: [{ title: "Products — NexusIQ" }, { name: "description", content: "Your product catalogue with costs and reorder settings." }, { property: "og:title", content: "Products — NexusIQ" }, { property: "og:description", content: "Your product catalogue." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Products,
 });
 

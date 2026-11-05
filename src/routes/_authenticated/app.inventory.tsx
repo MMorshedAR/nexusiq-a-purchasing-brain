@@ -14,7 +14,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 export const Route = createFileRoute("/_authenticated/app/inventory")({
-  head: () => ({ meta: [{ title: "Inventory Intelligence — NexusIQ" }, { name: "description", content: "Stock levels by product and warehouse." }, { property: "og:title", content: "Inventory Intelligence — NexusIQ" }, { property: "og:description", content: "Stock levels by product and warehouse." }] }),
+  head: () => ({ meta: [{ title: "Inventory Intelligence — NexusIQ" }, { name: "description", content: "Stock levels by product and warehouse." }, { property: "og:title", content: "Inventory Intelligence — NexusIQ" }, { property: "og:description", content: "Stock levels by product and warehouse." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Inventory,
 });
 

@@ -17,7 +17,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/_authenticated/app/reorder")({
-  head: () => ({ meta: [{ title: "Smart Reorder Planner — NexusIQ" }, { name: "description", content: "Budget-aware reorder recommendations." }, { property: "og:title", content: "Smart Reorder Planner — NexusIQ" }, { property: "og:description", content: "Budget-aware reorder recommendations." }] }),
+  head: () => ({ meta: [{ title: "Smart Reorder Planner — NexusIQ" }, { name: "description", content: "Budget-aware reorder recommendations." }, { property: "og:title", content: "Smart Reorder Planner — NexusIQ" }, { property: "og:description", content: "Budget-aware reorder recommendations." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Planner,
 });
 

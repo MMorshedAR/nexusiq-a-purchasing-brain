@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { EntityManager } from "@/components/entity-manager";
 
 export const Route = createFileRoute("/_authenticated/app/suppliers")({
-  head: () => ({ meta: [{ title: "Suppliers — NexusIQ" }, { name: "description", content: "Manage the suppliers you buy from." }, { property: "og:title", content: "Suppliers — NexusIQ" }, { property: "og:description", content: "Manage the suppliers you buy from." }] }),
+  head: () => ({ meta: [{ title: "Suppliers — NexusIQ" }, { name: "description", content: "Manage the suppliers you buy from." }, { property: "og:title", content: "Suppliers — NexusIQ" }, { property: "og:description", content: "Manage the suppliers you buy from." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: () => (
     <EntityManager
       table="suppliers" title="Suppliers" singular="Supplier" description="Everyone you buy from, with lead times and terms."

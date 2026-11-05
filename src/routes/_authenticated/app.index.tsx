@@ -10,7 +10,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/")({
-  head: () => ({ meta: [{ title: "Overview — NexusIQ" }, { name: "description", content: "Your stock, risk and purchasing overview." }, { property: "og:title", content: "Overview — NexusIQ" }, { property: "og:description", content: "Your stock, risk and purchasing overview." }] }),
+  head: () => ({ meta: [{ title: "Overview — NexusIQ" }, { name: "description", content: "Your stock, risk and purchasing overview." }, { property: "og:title", content: "Overview — NexusIQ" }, { property: "og:description", content: "Your stock, risk and purchasing overview." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Overview,
 });
 

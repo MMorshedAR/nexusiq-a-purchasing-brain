@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/_authenticated/app/import")({
-  head: () => ({ meta: [{ title: "Data Import Center — NexusIQ" }, { name: "description", content: "Import products, suppliers, stock and sales from CSV or Excel." }, { property: "og:title", content: "Data Import Center — NexusIQ" }, { property: "og:description", content: "Import from CSV or Excel." }] }),
+  head: () => ({ meta: [{ title: "Data Import Center — NexusIQ" }, { name: "description", content: "Import products, suppliers, stock and sales from CSV or Excel." }, { property: "og:title", content: "Data Import Center — NexusIQ" }, { property: "og:description", content: "Import from CSV or Excel." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: ImportCenter,
 });
 

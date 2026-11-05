@@ -8,11 +8,15 @@ export async function claimPendingInvite(user: User) {
   if (!token) return false;
 
   const { data, error } = await supabase.rpc("claim_invite", { _token: token, _email: user.email ?? "" });
-  if (error) throw error;
+  if (error) throw new Error("The invitation could not be checked. Please try again.");
   const result = data as string;
   if (result !== "ok") {
+    if (result === "expired" || result === "invalid") {
+      if (typeof window !== "undefined") window.sessionStorage.removeItem("nexusiq.pendingInvite");
+      if (typeof metadataToken === "string") await supabase.auth.updateUser({ data: { pending_invite: null } });
+    }
     const message = result === "wrong_account" ? "This invitation was sent to a different email address." :
-      result === "expired" ? "This invitation has expired." :
+      result === "expired" ? "This invitation has expired. Ask the workspace admin for a new link." :
       result === "unauthenticated" ? "Sign in before accepting this invitation." : "This invitation is no longer available.";
     throw new Error(message);
   }
