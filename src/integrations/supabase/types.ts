@@ -60,6 +60,7 @@ export type Database = {
       }
       chat_messages: {
         Row: {
+          client_message_id: string | null
           company_id: string
           created_at: string
           id: string
@@ -69,6 +70,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          client_message_id?: string | null
           company_id: string
           created_at?: string
           id?: string
@@ -78,6 +80,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          client_message_id?: string | null
           company_id?: string
           created_at?: string
           id?: string
@@ -630,6 +633,15 @@ export type Database = {
           _slug: string
         }
         Returns: string
+      }
+      invite_preview: {
+        Args: { _token: string }
+        Returns: {
+          company_name: string
+          expires_at: string
+          invited_email: string
+          invited_role: Database["public"]["Enums"]["company_role"]
+        }[]
       }
       is_company_admin: { Args: { _company: string }; Returns: boolean }
       is_company_member: { Args: { _company: string }; Returns: boolean }
