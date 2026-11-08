@@ -64,6 +64,13 @@
       "when": 1793895117519,
       "tag": "0008_secure_member_identity_updates",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1794162546152,
+      "tag": "0009_branch_company_foundation",
+      "breakpoints": true
     }
   ]
 }

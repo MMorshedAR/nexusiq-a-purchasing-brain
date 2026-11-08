@@ -15,3 +15,5 @@
 - Workspace tools remain separate authenticated file routes; public invite-preview routes expose only invitation details and never workspace records.
 - Saved AI threads belong to one company member; verify the bearer and thread owner before assembling saved history or workspace context, keeping model credentials server-side.
 - Enforce Owner-only role changes and immutable workspace-member identity in database triggers/policies, because client-side role controls are not a security boundary.
+- Keep branches distinct from warehouses; represent branch assignments separately from company membership, and enforce branch scope in database policies and privileged operations.
+- Keep payroll and compensation records in separately protected data paths, accessible only to the company Owner and assigned branch admins.

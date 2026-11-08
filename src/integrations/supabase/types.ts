@@ -19,6 +19,7 @@ export type Database = {
           action: string
           actor_email: string | null
           actor_id: string | null
+          branch_id: string | null
           company_id: string
           created_at: string
           entity: string
@@ -30,6 +31,7 @@ export type Database = {
           action: string
           actor_email?: string | null
           actor_id?: string | null
+          branch_id?: string | null
           company_id: string
           created_at?: string
           entity: string
@@ -41,6 +43,7 @@ export type Database = {
           action?: string
           actor_email?: string | null
           actor_id?: string | null
+          branch_id?: string | null
           company_id?: string
           created_at?: string
           entity?: string
@@ -50,7 +53,109 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "audit_log_branch_company_fkey"
+            columns: ["branch_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "branches"
+            referencedColumns: ["id", "company_id"]
+          },
+          {
             foreignKeyName: "audit_log_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      branch_members: {
+        Row: {
+          branch_id: string
+          company_id: string
+          created_at: string
+          full_name: string | null
+          id: string
+          role: Database["public"]["Enums"]["branch_access_role"]
+          user_id: string
+        }
+        Insert: {
+          branch_id: string
+          company_id: string
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["branch_access_role"]
+          user_id: string
+        }
+        Update: {
+          branch_id?: string
+          company_id?: string
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["branch_access_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "branch_members_branch_id_company_id_fkey"
+            columns: ["branch_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "branches"
+            referencedColumns: ["id", "company_id"]
+          },
+          {
+            foreignKeyName: "branch_members_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      branches: {
+        Row: {
+          address: string | null
+          branch_code: string
+          company_id: string
+          created_at: string
+          description: string | null
+          email: string | null
+          id: string
+          name: string
+          opening_date: string | null
+          phone: string | null
+          status: string
+        }
+        Insert: {
+          address?: string | null
+          branch_code: string
+          company_id: string
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          opening_date?: string | null
+          phone?: string | null
+          status?: string
+        }
+        Update: {
+          address?: string | null
+          branch_code?: string
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          opening_date?: string | null
+          phone?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "branches_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
@@ -143,37 +248,61 @@ export type Database = {
       }
       companies: {
         Row: {
+          address: string | null
           business_type: string | null
+          city: string | null
+          company_email: string | null
           country: string
           created_at: string
           created_by: string
           currency: string
           id: string
+          logo_path: string | null
           monthly_budget: number | null
           name: string
+          phone: string | null
+          registration_number: string | null
           slug: string
+          tax_id: string | null
+          website: string | null
         }
         Insert: {
+          address?: string | null
           business_type?: string | null
+          city?: string | null
+          company_email?: string | null
           country?: string
           created_at?: string
           created_by: string
           currency?: string
           id?: string
+          logo_path?: string | null
           monthly_budget?: number | null
           name: string
+          phone?: string | null
+          registration_number?: string | null
           slug: string
+          tax_id?: string | null
+          website?: string | null
         }
         Update: {
+          address?: string | null
           business_type?: string | null
+          city?: string | null
+          company_email?: string | null
           country?: string
           created_at?: string
           created_by?: string
           currency?: string
           id?: string
+          logo_path?: string | null
           monthly_budget?: number | null
           name?: string
+          phone?: string | null
+          registration_number?: string | null
           slug?: string
+          tax_id?: string | null
+          website?: string | null
         }
         Relationships: []
       }
@@ -376,6 +505,7 @@ export type Database = {
       purchase_orders: {
         Row: {
           approved_at: string | null
+          branch_id: string | null
           company_id: string
           created_at: string
           created_by: string | null
@@ -391,6 +521,7 @@ export type Database = {
         }
         Insert: {
           approved_at?: string | null
+          branch_id?: string | null
           company_id: string
           created_at?: string
           created_by?: string | null
@@ -406,6 +537,7 @@ export type Database = {
         }
         Update: {
           approved_at?: string | null
+          branch_id?: string | null
           company_id?: string
           created_at?: string
           created_by?: string | null
@@ -420,6 +552,13 @@ export type Database = {
           warehouse_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "purchase_orders_branch_company_fkey"
+            columns: ["branch_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "branches"
+            referencedColumns: ["id", "company_id"]
+          },
           {
             foreignKeyName: "purchase_orders_company_id_fkey"
             columns: ["company_id"]
@@ -445,6 +584,7 @@ export type Database = {
       }
       sales_history: {
         Row: {
+          branch_id: string | null
           company_id: string
           created_at: string
           id: string
@@ -453,6 +593,7 @@ export type Database = {
           sale_date: string
         }
         Insert: {
+          branch_id?: string | null
           company_id: string
           created_at?: string
           id?: string
@@ -461,6 +602,7 @@ export type Database = {
           sale_date: string
         }
         Update: {
+          branch_id?: string | null
           company_id?: string
           created_at?: string
           id?: string
@@ -469,6 +611,13 @@ export type Database = {
           sale_date?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "sales_history_branch_company_fkey"
+            columns: ["branch_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "branches"
+            referencedColumns: ["id", "company_id"]
+          },
           {
             foreignKeyName: "sales_history_company_id_fkey"
             columns: ["company_id"]
@@ -578,6 +727,7 @@ export type Database = {
       }
       warehouses: {
         Row: {
+          branch_id: string | null
           capacity_units: number | null
           company_id: string
           created_at: string
@@ -586,6 +736,7 @@ export type Database = {
           name: string
         }
         Insert: {
+          branch_id?: string | null
           capacity_units?: number | null
           company_id: string
           created_at?: string
@@ -594,6 +745,7 @@ export type Database = {
           name: string
         }
         Update: {
+          branch_id?: string | null
           capacity_units?: number | null
           company_id?: string
           created_at?: string
@@ -602,6 +754,13 @@ export type Database = {
           name?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "warehouses_branch_company_fkey"
+            columns: ["branch_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "branches"
+            referencedColumns: ["id", "company_id"]
+          },
           {
             foreignKeyName: "warehouses_company_id_fkey"
             columns: ["company_id"]
@@ -616,6 +775,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_edit_branch: {
+        Args: { _branch: string; _company: string }
+        Returns: boolean
+      }
       can_edit_company: { Args: { _company: string }; Returns: boolean }
       claim_invite: {
         Args: { _email: string; _token: string }
@@ -643,6 +806,14 @@ export type Database = {
           invited_role: Database["public"]["Enums"]["company_role"]
         }[]
       }
+      is_branch_admin: {
+        Args: { _branch: string; _company: string }
+        Returns: boolean
+      }
+      is_branch_member: {
+        Args: { _branch: string; _company: string }
+        Returns: boolean
+      }
       is_company_admin: { Args: { _company: string }; Returns: boolean }
       is_company_member: { Args: { _company: string }; Returns: boolean }
       is_company_owner: {
@@ -653,6 +824,7 @@ export type Database = {
       slug_available: { Args: { _slug: string }; Returns: boolean }
     }
     Enums: {
+      branch_access_role: "admin" | "manager" | "employee"
       company_role: "owner" | "admin" | "manager" | "analyst" | "viewer"
       po_status: "draft" | "approved" | "received" | "cancelled"
     }
@@ -782,6 +954,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      branch_access_role: ["admin", "manager", "employee"],
       company_role: ["owner", "admin", "manager", "analyst", "viewer"],
       po_status: ["draft", "approved", "received", "cancelled"],
     },
