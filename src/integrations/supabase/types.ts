@@ -421,7 +421,7 @@ export type Database = {
           department?: string | null
           designation?: string | null
           email?: string | null
-          employee_code: string
+          employee_code?: string
           employment_status?: string
           employment_type?: string
           full_name: string
@@ -500,11 +500,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "inventory_product_company_fkey"
+            columns: ["product_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id", "company_id"]
+          },
+          {
             foreignKeyName: "inventory_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_warehouse_company_fkey"
+            columns: ["warehouse_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "warehouses"
+            referencedColumns: ["id", "company_id"]
           },
           {
             foreignKeyName: "inventory_warehouse_id_fkey"
@@ -617,11 +631,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "po_items_order_company_fkey"
+            columns: ["po_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_orders"
+            referencedColumns: ["id", "company_id"]
+          },
+          {
             foreignKeyName: "po_items_po_id_fkey"
             columns: ["po_id"]
             isOneToOne: false
             referencedRelation: "purchase_orders"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "po_items_product_company_fkey"
+            columns: ["product_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id", "company_id"]
           },
           {
             foreignKeyName: "po_items_product_id_fkey"
@@ -685,6 +713,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "companies"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_supplier_company_fkey"
+            columns: ["supplier_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id", "company_id"]
           },
           {
             foreignKeyName: "products_supplier_id_fkey"
@@ -760,11 +795,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "purchase_orders_supplier_company_fkey"
+            columns: ["supplier_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id", "company_id"]
+          },
+          {
             foreignKeyName: "purchase_orders_supplier_id_fkey"
             columns: ["supplier_id"]
             isOneToOne: false
             referencedRelation: "suppliers"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_orders_warehouse_company_fkey"
+            columns: ["warehouse_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "warehouses"
+            referencedColumns: ["id", "company_id"]
           },
           {
             foreignKeyName: "purchase_orders_warehouse_id_fkey"
@@ -817,6 +866,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "companies"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_history_product_company_fkey"
+            columns: ["product_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id", "company_id"]
           },
           {
             foreignKeyName: "sales_history_product_id_fkey"
@@ -873,6 +929,13 @@ export type Database = {
             referencedColumns: ["id", "company_id"]
           },
           {
+            foreignKeyName: "sales_transaction_items_product_company_fkey"
+            columns: ["product_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id", "company_id"]
+          },
+          {
             foreignKeyName: "sales_transaction_items_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
@@ -880,11 +943,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "sales_transaction_items_transaction_company_branch_fkey"
+            columns: ["transaction_id", "company_id", "branch_id"]
+            isOneToOne: false
+            referencedRelation: "sales_transactions"
+            referencedColumns: ["id", "company_id", "branch_id"]
+          },
+          {
             foreignKeyName: "sales_transaction_items_transaction_id_fkey"
             columns: ["transaction_id"]
             isOneToOne: false
             referencedRelation: "sales_transactions"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_transaction_items_warehouse_company_fkey"
+            columns: ["warehouse_id", "company_id"]
+            isOneToOne: false
+            referencedRelation: "warehouses"
+            referencedColumns: ["id", "company_id"]
           },
           {
             foreignKeyName: "sales_transaction_items_warehouse_id_fkey"
@@ -1094,6 +1171,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      branch_invite_preview: {
+        Args: { _token: string }
+        Returns: {
+          branch_name: string
+          company_name: string
+          expires_at: string
+          invited_branch_role: Database["public"]["Enums"]["branch_access_role"]
+          invited_email: string
+        }[]
+      }
       can_edit_branch: {
         Args: { _branch: string; _company: string }
         Returns: boolean
@@ -1143,9 +1230,32 @@ export type Database = {
         Args: { _company: string; _user: string }
         Returns: boolean
       }
+      manage_branch_member: {
+        Args: {
+          _branch: string
+          _role: Database["public"]["Enums"]["branch_access_role"]
+          _user: string
+        }
+        Returns: string
+      }
       receive_purchase_order: { Args: { _po: string }; Returns: undefined }
       record_branch_sale: {
         Args: { _branch: string; _items: Json; _transaction_date?: string }
+        Returns: string
+      }
+      remove_branch_member: {
+        Args: { _assignment: string }
+        Returns: undefined
+      }
+      set_employee_compensation: {
+        Args: {
+          _allowances: number
+          _basic: number
+          _bonuses: number
+          _deductions: number
+          _effective_from: string
+          _employee: string
+        }
         Returns: string
       }
       slug_available: { Args: { _slug: string }; Returns: boolean }

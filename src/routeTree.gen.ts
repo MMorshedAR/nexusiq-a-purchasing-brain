@@ -23,6 +23,7 @@ import { Route as AuthenticatedAppActivityRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAppBillingRouteImport } from './routes/_authenticated/app.billing'
 import { Route as AuthenticatedAppCashFlowRouteImport } from './routes/_authenticated/app.cash-flow'
 import { Route as AuthenticatedAppCommandCenterRouteImport } from './routes/_authenticated/app.command-center'
+import { Route as AuthenticatedAppCompanyProfileRouteImport } from './routes/_authenticated/app.company-profile'
 import { Route as AuthenticatedAppForecastsRouteImport } from './routes/_authenticated/app.forecasts'
 import { Route as AuthenticatedAppHelpRouteImport } from './routes/_authenticated/app.help'
 import { Route as AuthenticatedAppImportRouteImport } from './routes/_authenticated/app.import'
@@ -111,6 +112,12 @@ const AuthenticatedAppCommandCenterRoute =
   AuthenticatedAppCommandCenterRouteImport.update({
     id: '/command-center',
     path: '/command-center',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppCompanyProfileRoute =
+  AuthenticatedAppCompanyProfileRouteImport.update({
+    id: '/company-profile',
+    path: '/company-profile',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
 const AuthenticatedAppForecastsRoute =
@@ -222,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/app/billing': typeof AuthenticatedAppBillingRoute
   '/app/cash-flow': typeof AuthenticatedAppCashFlowRoute
   '/app/command-center': typeof AuthenticatedAppCommandCenterRoute
+  '/app/company-profile': typeof AuthenticatedAppCompanyProfileRoute
   '/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/app/help': typeof AuthenticatedAppHelpRoute
   '/app/import': typeof AuthenticatedAppImportRoute
@@ -253,6 +261,7 @@ export interface FileRoutesByTo {
   '/app/billing': typeof AuthenticatedAppBillingRoute
   '/app/cash-flow': typeof AuthenticatedAppCashFlowRoute
   '/app/command-center': typeof AuthenticatedAppCommandCenterRoute
+  '/app/company-profile': typeof AuthenticatedAppCompanyProfileRoute
   '/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/app/help': typeof AuthenticatedAppHelpRoute
   '/app/import': typeof AuthenticatedAppImportRoute
@@ -287,6 +296,7 @@ export interface FileRoutesById {
   '/_authenticated/app/billing': typeof AuthenticatedAppBillingRoute
   '/_authenticated/app/cash-flow': typeof AuthenticatedAppCashFlowRoute
   '/_authenticated/app/command-center': typeof AuthenticatedAppCommandCenterRoute
+  '/_authenticated/app/company-profile': typeof AuthenticatedAppCompanyProfileRoute
   '/_authenticated/app/forecasts': typeof AuthenticatedAppForecastsRoute
   '/_authenticated/app/help': typeof AuthenticatedAppHelpRoute
   '/_authenticated/app/import': typeof AuthenticatedAppImportRoute
@@ -321,6 +331,7 @@ export interface FileRouteTypes {
     | '/app/billing'
     | '/app/cash-flow'
     | '/app/command-center'
+    | '/app/company-profile'
     | '/app/forecasts'
     | '/app/help'
     | '/app/import'
@@ -352,6 +363,7 @@ export interface FileRouteTypes {
     | '/app/billing'
     | '/app/cash-flow'
     | '/app/command-center'
+    | '/app/company-profile'
     | '/app/forecasts'
     | '/app/help'
     | '/app/import'
@@ -385,6 +397,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/billing'
     | '/_authenticated/app/cash-flow'
     | '/_authenticated/app/command-center'
+    | '/_authenticated/app/company-profile'
     | '/_authenticated/app/forecasts'
     | '/_authenticated/app/help'
     | '/_authenticated/app/import'
@@ -515,6 +528,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppCommandCenterRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/company-profile': {
+      id: '/_authenticated/app/company-profile'
+      path: '/company-profile'
+      fullPath: '/app/company-profile'
+      preLoaderRoute: typeof AuthenticatedAppCompanyProfileRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/forecasts': {
       id: '/_authenticated/app/forecasts'
       path: '/forecasts'
@@ -643,6 +663,7 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppBillingRoute: typeof AuthenticatedAppBillingRoute
   AuthenticatedAppCashFlowRoute: typeof AuthenticatedAppCashFlowRoute
   AuthenticatedAppCommandCenterRoute: typeof AuthenticatedAppCommandCenterRoute
+  AuthenticatedAppCompanyProfileRoute: typeof AuthenticatedAppCompanyProfileRoute
   AuthenticatedAppForecastsRoute: typeof AuthenticatedAppForecastsRoute
   AuthenticatedAppHelpRoute: typeof AuthenticatedAppHelpRoute
   AuthenticatedAppImportRoute: typeof AuthenticatedAppImportRoute
@@ -669,6 +690,7 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppBillingRoute: AuthenticatedAppBillingRoute,
   AuthenticatedAppCashFlowRoute: AuthenticatedAppCashFlowRoute,
   AuthenticatedAppCommandCenterRoute: AuthenticatedAppCommandCenterRoute,
+  AuthenticatedAppCompanyProfileRoute: AuthenticatedAppCompanyProfileRoute,
   AuthenticatedAppForecastsRoute: AuthenticatedAppForecastsRoute,
   AuthenticatedAppHelpRoute: AuthenticatedAppHelpRoute,
   AuthenticatedAppImportRoute: AuthenticatedAppImportRoute,

@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, BrainCircuit, TrendingUp, ShoppingCart, Boxes, Truck, ShieldAlert, Wallet, PiggyBank,
-  Package, Building2, Warehouse, FileText, Upload, BarChart3, Users, Plug, CreditCard, Settings, LifeBuoy, History,
+  Package, Building2, Warehouse, FileText, Upload, BarChart3, Users, Plug, CreditCard, Settings, LifeBuoy, History, Store, UserRound, Banknote,
   type LucideIcon,
 } from "lucide-react";
 
@@ -22,6 +22,12 @@ export type NavPath =
   | "/app/reports"
   | "/app/activity"
   | "/app/team"
+  | "/app/company-profile"
+  | "/app/branches"
+  | "/app/branch-monitoring"
+  | "/app/branch/$branchId"
+  | "/app/employees"
+  | "/app/payroll"
   | "/app/integrations"
   | "/app/billing"
   | "/app/settings"
@@ -48,6 +54,13 @@ export const navGroups: NavGroup[] = [
     { slug: "purchase-orders", to: "/app/purchase-orders", label: "Purchase Orders", icon: FileText },
     { slug: "import", to: "/app/import", label: "Data Import Center", icon: Upload },
     { slug: "reports", to: "/app/reports", label: "Reports & Analytics", icon: BarChart3, blurb: "Exportable reports across stock, purchases and suppliers." },
+  ]},
+  { label: "Company", items: [
+    { slug: "company-profile", to: "/app/company-profile", label: "Company Profile", icon: Building2 },
+    { slug: "branches", to: "/app/branches", label: "Branch Management", icon: Store },
+    { slug: "branch-monitoring", to: "/app/branch-monitoring", label: "Branch Monitoring", icon: BarChart3 },
+    { slug: "employees", to: "/app/employees", label: "Employees & Managers", icon: UserRound },
+    { slug: "payroll", to: "/app/payroll", label: "Salary & Payroll", icon: Banknote },
   ]},
   { label: "Workspace", items: [
     { slug: "activity", to: "/app/activity", label: "Activity log", icon: History },
