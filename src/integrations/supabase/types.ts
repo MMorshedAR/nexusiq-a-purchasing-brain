@@ -1186,6 +1186,10 @@ export type Database = {
         Returns: boolean
       }
       can_edit_company: { Args: { _company: string }; Returns: boolean }
+      can_manage_branch_people: {
+        Args: { _branch: string; _company: string }
+        Returns: boolean
+      }
       claim_invite: {
         Args: { _email: string; _token: string }
         Returns: string
